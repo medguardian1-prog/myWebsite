@@ -1,7 +1,6 @@
 "use client";
 
 import { contact, pricing } from "@/lib/site";
-import FilamentField from "./FilamentField";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { ArrowOutIcon, MailIcon, WhatsAppIcon } from "./Icons";
 
@@ -40,11 +39,6 @@ export default function Contact() {
             "radial-gradient(70% 60% at 20% 110%, rgba(255,122,26,0.22) 0%, rgba(8,7,11,0) 70%)",
         }}
       />
-      <FilamentField energy={0.5} className="opacity-45" />
-      <div
-        aria-hidden
-        className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-ink)_0%,rgba(8,7,11,0.55)_45%,var(--color-ink)_100%)]"
-      />
 
       <div className="relative">
         <div className="flex items-baseline gap-4">
@@ -76,8 +70,6 @@ export default function Contact() {
                   {...(external
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
-                  data-cursor="view"
-                  data-cursor-label="Send"
                   className="group relative flex items-center gap-5 overflow-hidden px-2 py-7 md:gap-8 md:py-10"
                 >
                   {/* Heat sweeps in from the left on hover. */}

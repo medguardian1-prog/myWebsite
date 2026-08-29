@@ -29,7 +29,7 @@ export default function FloatingWhatsApp() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`WhatsApp Vysan on ${contact.phoneDisplay}`}
-          className="group fixed bottom-5 right-5 z-[90] flex items-center gap-3 rounded-full bg-wa py-3 pl-4 pr-5 text-ink shadow-[0_18px_50px_-18px_rgba(37,211,102,0.55)] md:bottom-7 md:right-7"
+          className="group fixed bottom-5 right-5 z-[90] flex items-center gap-3 rounded-full bg-wa py-3 pl-4 pr-5 text-ink md:bottom-7 md:right-7"
           initial={{ opacity: 0, y: 24, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 24, scale: 0.9 }}

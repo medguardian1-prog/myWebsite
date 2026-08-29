@@ -72,7 +72,7 @@ export default function Hero() {
             "radial-gradient(80% 55% at 72% 38%, rgba(255,122,26,0.20) 0%, rgba(255,61,0,0.07) 38%, rgba(8,7,11,0) 72%)",
         }}
       />
-      <FilamentField />
+      <FilamentField energy={0.75} />
       <div
         aria-hidden
         className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(8,7,11,0.72)_0%,rgba(8,7,11,0.15)_38%,rgba(8,7,11,0.55)_78%,var(--color-ink)_100%)]"
@@ -100,18 +100,6 @@ export default function Hero() {
           <br />
           South Africa
         </motion.div>
-      </div>
-
-      {/* Quiet anchor in the left void so the composition isn't all right-hand. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-[calc(var(--gutter)-0.25rem)] top-1/2 z-10 hidden -translate-y-1/2 items-center gap-4 lg:flex"
-        style={{ writingMode: "vertical-rl" }}
-      >
-        <span className="h-24 w-px bg-[linear-gradient(to_bottom,transparent,var(--color-filament),transparent)]" />
-        <span className="label !text-[9px] !text-ash-dim">
-          Freelance web development · Durban
-        </span>
       </div>
 
       {/* ---- statement, pushed off-centre to the right ---- */}

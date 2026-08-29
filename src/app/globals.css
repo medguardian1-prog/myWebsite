@@ -163,7 +163,7 @@ body {
   inset: 0;
   border-radius: inherit;
   padding: 1px;
-  background: var(--filament-gradient);
+  background: color-mix(in oklab, var(--color-filament) 55%, transparent);
   -webkit-mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);

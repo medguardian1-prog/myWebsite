@@ -15,7 +15,7 @@ import { useEffect, useRef } from "react";
  * on a page whose whole job is getting someone to press a button.
  */
 
-const JOINTS = 22;
+const JOINTS = 16;
 const EASE = 0.42;
 
 export default function FilamentCursor() {
@@ -104,23 +104,13 @@ export default function FilamentCursor() {
           const g = Math.round(90 + 150 * cool);
           const b = Math.round(20 + 150 * cool * cool * cool);
 
-          ctx.strokeStyle = `rgba(${r},${g},${b},${a * 0.85})`;
-          ctx.lineWidth = 0.5 + 2.3 * cool * heat;
+          ctx.strokeStyle = `rgba(${r},${g},${b},${a * 0.6})`;
+          ctx.lineWidth = 0.5 + 1.6 * cool * heat;
           ctx.beginPath();
           ctx.moveTo(pts[i].x, pts[i].y);
           ctx.lineTo(pts[i + 1].x, pts[i + 1].y);
           ctx.stroke();
         }
-
-        // A small bloom at the tip sells it as glowing rather than drawn.
-        const g = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 22 * heat + 6);
-        g.addColorStop(0, `rgba(255,220,170,${0.5 * heat})`);
-        g.addColorStop(0.4, `rgba(255,122,26,${0.22 * heat})`);
-        g.addColorStop(1, "rgba(255,122,26,0)");
-        ctx.fillStyle = g;
-        ctx.beginPath();
-        ctx.arc(head.x, head.y, 22 * heat + 6, 0, Math.PI * 2);
-        ctx.fill();
 
         ctx.globalCompositeOperation = "source-over";
       }

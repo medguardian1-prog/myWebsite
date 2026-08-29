@@ -84,7 +84,7 @@ export default function Pricing() {
           >
             <div
               aria-hidden
-              className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full opacity-60 blur-3xl"
+              className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full opacity-30 blur-3xl"
               style={{
                 background:
                   "radial-gradient(circle, rgba(255,122,26,0.30), rgba(8,7,11,0) 70%)",

@@ -8,7 +8,7 @@ export default function Grain() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[60] opacity-[0.16] mix-blend-overlay motion-reduce:opacity-[0.1]"
+      className="pointer-events-none fixed inset-0 z-[60] opacity-[0.06] mix-blend-overlay"
     >
       <svg className="h-full w-full">
         <filter id="hw-grain">

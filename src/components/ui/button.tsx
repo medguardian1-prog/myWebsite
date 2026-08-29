@@ -14,8 +14,8 @@ const buttonVariants = cva(
       variant: {
         // Molten primary: the gradient lives in a pseudo-layer so it can shift.
         filament:
-          "text-ink font-semibold overflow-hidden [background:var(--filament-gradient)] [background-size:200%_100%] hover:[background-position:100%_0] shadow-[0_0_0_1px_rgba(255,122,26,0.35),0_18px_50px_-18px_rgba(255,122,26,0.75)]",
-        wa: "bg-wa text-ink font-semibold hover:bg-[#1fbb59] shadow-[0_18px_50px_-22px_rgba(37,211,102,0.7)]",
+          "text-ink font-semibold overflow-hidden [background:var(--filament-gradient)] [background-size:200%_100%] hover:[background-position:100%_0]",
+        wa: "bg-wa text-ink font-semibold hover:bg-[#1fbb59]",
         wire: "border border-hairline text-bone hover:border-filament hover:text-filament-gold bg-transparent",
         glass: "glass text-bone hover:border-[color-mix(in_oklab,var(--color-filament)_55%,transparent)] hover:text-filament-gold",
         ghost: "text-ash hover:text-bone",

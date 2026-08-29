@@ -51,10 +51,11 @@ Google reads.
   currently calls them demonstration builds everywhere they appear — heading,
   badge on each card, and the closing panel. That's deliberate (see below);
   swap the wording the day it stops being true, not before.
-- The "Who builds it" panel shows a `VC` monogram plate where your photo should
-  go. Drop a photo at `public/vysan.jpg` and swap the marked block in
-  `src/components/site/Who.tsx` for a `next/image`. It's deliberately not a
-  stock face — a stock face on a one-person site reads as a lie.
+- The "Who builds it" panel currently shows Durban (see *On the photograph*)
+  where a photo of you should go. When you have a good one, drop it at
+  `public/vysan.jpg` and point the marked `Image` in
+  `src/components/site/Who.tsx` at it. It's deliberately not a stock face — a
+  stock face on a one-person site reads as a lie.
 
 ### Tagline options
 
@@ -130,7 +131,8 @@ business, real or invented, in a losing position.
 - **Framer Motion** — entrances, the mobile menu, the search-proof toggle
 - **Raw WebGL2** for the hero's filament field; **canvas 2D** for the cursor trail
 - **Hand-drawn SVG logotype** (`WireMark`) — monoline strokes with square caps;
-  draw-on animation in the hero, static in the nav and footer
+  switch-on animation in the hero, static in the nav, thrown up as a tag in the
+  footer (`TagMark`)
 
 ### On the hero shader
 

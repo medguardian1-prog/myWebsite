@@ -130,6 +130,10 @@ export default function FilamentField({
     const canvas = ref.current;
     if (!canvas) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Phones don't run this at all. A per-frame full-screen shader is what
+    // makes a page feel heavy while scrolling, and the static gradient behind
+    // it was always the intended fallback — so on touch it becomes the design.
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     const gl = canvas.getContext("webgl2", {
       antialias: false,
@@ -158,9 +162,8 @@ export default function FilamentField({
     const uEnergy = gl.getUniformLocation(prog, "uEnergy");
     gl.uniform1f(uEnergy, energy);
 
-    const coarse = window.matchMedia("(pointer: coarse)").matches;
     // Soft glow upscales cleanly, so we render well under native resolution.
-    const scale = coarse ? 0.45 : 0.62;
+    const scale = 0.62;
 
     const resize = () => {
       const w = Math.max(1, Math.floor(canvas.clientWidth * scale));

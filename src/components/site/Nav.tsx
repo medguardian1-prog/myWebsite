@@ -52,7 +52,7 @@ export default function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-[100] border-b border-hairline bg-ink/85 backdrop-blur-md">
+      <header className="fixed inset-x-0 top-0 z-[100] border-b border-hairline bg-ink lg:bg-ink/85 lg:backdrop-blur-md">
         <nav className="mx-auto flex h-14 max-w-[1700px] items-stretch">
           {/* ---- mark ---- */}
           <a

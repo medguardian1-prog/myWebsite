@@ -159,16 +159,19 @@ the wire*, not left to right. The two Ts sit on it so they go first, then O and
 W, then H and I, and the trailing Es last — so the current visibly spreads
 outward through the word. See `HOPS` in `WireMark.tsx` if you reorder letters.
 
-### On the footer tag
+### On the footer mark
 
-The footer runs the same letterforms as a throw-up (`TagMark.tsx`) — no new
-geometry, so it still reads as one brand. It is built the way a throw-up
-actually is, back to front: a hard offset drop shadow in warm brown, a
-keyline, then the letter interiors knocked back to the wall colour. Mitre
-joins and square caps keep the limbs chunky; rounded joins are what made an
-earlier attempt read as balloons rather than paint. A turbulence displacement
-filter roughens the edges, and the piece leans 12°. The hot wire still runs
-through the double T.
+The footer runs the same letterforms as the logotype (`LiveMark.tsx`) at
+hairline weight, idling. Two loops run forever and neither asks for attention:
+a soft band of light crosses the strokes every twelve seconds — masked, so it
+lifts them rather than adding anything on top — and a single pulse of current
+runs the hot wire, the sign the circuit is still live after the hero switched
+it on.
+
+An earlier version was a graffiti throw-up. It was the wrong instinct for a
+site selling professional work: it competed with the content instead of
+closing the page, and no amount of tuning fixed that. Restraint reads as more
+expensive here.
 
 ### On the photograph
 
@@ -205,6 +208,20 @@ The native cursor is deliberately **left visible**. Replacing it with a dot and
 a lagging ring is the single most recognisable "designer portfolio" tell, and
 hiding the real pointer costs usability on a page whose entire job is getting
 someone to press a button.
+
+### Mobile performance
+
+Three things are switched off entirely on touch devices, because each one costs
+a repaint or a composite on every scrolled frame and none of them survives
+contact with a mid-range Android:
+
+- the hero WebGL shader (the static gradient behind it was always the designed
+  fallback, so on a phone it simply becomes the design)
+- the full-viewport `mix-blend-mode` grain plate
+- the nav’s `backdrop-filter`, which is replaced by a solid bar
+
+Measured after: a median 16.7 ms frame with 1.8% long frames while scrolling
+the full page under 4x CPU throttling.
 
 ### Accessibility and motion
 

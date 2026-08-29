@@ -1,7 +1,7 @@
 "use client";
 
 import { contact, navLinks, owner, site } from "@/lib/site";
-import TagMark from "./TagMark";
+import LiveMark from "./LiveMark";
 import { WhatsAppIcon, MailIcon } from "./Icons";
 
 export default function Footer() {
@@ -76,7 +76,7 @@ export default function Footer() {
         aria-hidden
         className="select-none overflow-hidden px-[var(--gutter)]"
       >
-        <TagMark className="h-auto w-full text-[#5b5470]" />
+        <LiveMark className="h-auto w-full text-[#2b2833]" />
       </div>
 
       <div className="flex flex-col gap-2 border-t border-hairline px-[var(--gutter)] py-5 text-[11px] text-ash-dim sm:flex-row sm:items-center sm:justify-between">

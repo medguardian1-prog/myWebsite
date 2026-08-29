@@ -286,6 +286,49 @@ body {
   animation: mark-node 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* Footer mark, idling. A band of light crossing the strokes, and one pulse
+   running the wire. Both are compositor transforms, so leaving them looping
+   costs nothing. */
+@keyframes mark-sweep {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(1360px);
+  }
+}
+/* The sweep repaints a masked group each frame; the pulse is a plain
+   transform. Keep the cheap one everywhere, the costly one on pointer
+   devices, so nothing competes with scrolling on a phone. */
+.mark-sweep {
+  animation: none;
+}
+@media (pointer: fine) {
+  .mark-sweep {
+    animation: mark-sweep 12s linear infinite;
+  }
+}
+
+@keyframes mark-pulse {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  82% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(var(--pulse-len));
+    opacity: 0;
+  }
+}
+.mark-pulse {
+  animation: mark-pulse 4.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 @keyframes filament-shift {
   0%,
   100% {
@@ -308,7 +351,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .mark-letter,
   .mark-surge,
-  .mark-node {
+  .mark-node,
+  .mark-sweep,
+  .mark-pulse {
     animation: none !important;
     opacity: 1 !important;
     stroke-dashoffset: 0 !important;

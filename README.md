@@ -157,6 +157,15 @@ the wire*, not left to right. The two Ts sit on it so they go first, then O and
 W, then H and I, and the trailing Es last — so the current visibly spreads
 outward through the word. See `HOPS` in `WireMark.tsx` if you reorder letters.
 
+### On the footer tag
+
+The footer runs the same letterforms as a throw-up (`TagMark.tsx`) — no new
+geometry, so it still reads as one brand. Fat strokes are knocked out by a
+thinner stroke in the page colour, which leaves a hairline outline around every
+limb; a turbulence displacement filter gives the vector edges a hand-drawn
+wobble; and the whole thing is slanted. The hot wire keeps its colour so the
+double-T tell survives the treatment.
+
 ### On the photograph
 
 `public/durban.webp` is the arch of Moses Mabhida Stadium, shot by Riaan

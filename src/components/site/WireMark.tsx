@@ -21,7 +21,7 @@ const W = 74; // letter width
 const H = 120; // cap height
 const X = (i: number) => i * ADVANCE;
 
-const LETTERS: readonly string[] = [
+export const MARK_LETTERS: readonly string[] = [
   // H
   `M${X(0)},0 V${H} M${X(0) + W},0 V${H} M${X(0)},60 H${X(0) + W}`,
   // O
@@ -50,15 +50,15 @@ const HOPS = [2, 1, 0, 0, 1, 2, 3, 4, 5];
 
 const STEM_A = X(2) + 37;
 const STEM_B = X(3) + 37;
-const BAR_X1 = X(2) - 8;
-const BAR_X2 = X(3) + W + 8;
+export const MARK_BAR_X1 = X(2) - 8;
+export const MARK_BAR_X2 = X(3) + W + 8;
 
 /** Terminals at each end, solder nodes where the wire meets the stems. */
-const NODES: readonly { x: number; r: number }[] = [
-  { x: BAR_X1, r: 12 },
+export const MARK_NODES: readonly { x: number; r: number }[] = [
+  { x: MARK_BAR_X1, r: 12 },
   { x: STEM_A, r: 6 },
   { x: STEM_B, r: 6 },
-  { x: BAR_X2, r: 12 },
+  { x: MARK_BAR_X2, r: 12 },
 ];
 
 export default function WireMark({
@@ -86,7 +86,7 @@ export default function WireMark({
       <title>HOTTWIREE</title>
 
       <g strokeWidth={13} strokeLinecap="square" strokeLinejoin="miter">
-        {LETTERS.map((d, i) => (
+        {MARK_LETTERS.map((d, i) => (
           <path
             key={i}
             d={d}
@@ -104,7 +104,7 @@ export default function WireMark({
       <g className={hotClassName}>
         {/* The wire. Surges from the left terminal to the right. */}
         <path
-          d={`M${BAR_X1},0 H${BAR_X2}`}
+          d={`M${MARK_BAR_X1},0 H${MARK_BAR_X2}`}
           stroke="currentColor"
           strokeWidth={13}
           strokeLinecap="square"
@@ -112,7 +112,7 @@ export default function WireMark({
           className={power ? "mark-surge" : undefined}
           style={power ? { animationDuration: `${SURGE}s` } : undefined}
         />
-        {NODES.map((n, i) => (
+        {MARK_NODES.map((n, i) => (
           <circle
             key={n.x}
             cx={n.x}
@@ -124,7 +124,7 @@ export default function WireMark({
               power
                 ? {
                     // Each node lights as the surge reaches it.
-                    animationDelay: `${0.06 + (i / (NODES.length - 1)) * SURGE * 0.85}s`,
+                    animationDelay: `${0.06 + (i / (MARK_NODES.length - 1)) * SURGE * 0.85}s`,
                   }
                 : undefined
             }

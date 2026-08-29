@@ -1,8 +1,8 @@
 "use client";
 
 import { contact, navLinks, owner, site } from "@/lib/site";
-import WireMark from "./WireMark";
-import { InstagramIcon, WhatsAppIcon, MailIcon } from "./Icons";
+import TagMark from "./TagMark";
+import { WhatsAppIcon, MailIcon } from "./Icons";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -67,17 +67,6 @@ export default function Footer() {
                 {contact.email}
               </a>
             </li>
-            <li>
-              <a
-                href={site.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2.5 text-[14px] text-ash transition-colors duration-300 hover:text-bone"
-              >
-                <InstagramIcon className="size-4 text-ash-dim transition-colors group-hover:text-filament" />
-                {site.instagram.handle}
-              </a>
-            </li>
           </ul>
         </div>
       </div>
@@ -87,10 +76,7 @@ export default function Footer() {
         aria-hidden
         className="select-none overflow-hidden px-[var(--gutter)]"
       >
-        <WireMark
-          className="h-auto w-full text-hairline"
-          hotClassName="text-filament/35"
-        />
+        <TagMark className="h-auto w-full text-[#5b5470]" />
       </div>
 
       <div className="flex flex-col gap-2 border-t border-hairline px-[var(--gutter)] py-5 text-[11px] text-ash-dim sm:flex-row sm:items-center sm:justify-between">

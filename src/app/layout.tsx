@@ -77,7 +77,6 @@ const jsonLd = {
     addressRegion: "KwaZulu-Natal",
     addressCountry: "ZA",
   },
-  sameAs: [site.instagram.url],
   makesOffer: [
     {
       "@type": "Offer",

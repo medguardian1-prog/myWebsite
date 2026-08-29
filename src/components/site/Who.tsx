@@ -5,7 +5,7 @@ import { owner, site, contact } from "@/lib/site";
 import blur from "@/lib/blur.json";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { Button } from "@/components/ui/button";
-import { InstagramIcon, PinIcon, WhatsAppIcon } from "./Icons";
+import { PinIcon, WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
 
 const blurMap = blur as Record<string, string>;
@@ -97,15 +97,6 @@ export default function Who() {
             </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-4">
-              <a
-                href={site.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] text-ash transition-colors hover:text-bone"
-              >
-                <InstagramIcon className="size-4 transition-colors group-hover:text-filament" />
-                {site.instagram.handle}
-              </a>
               <span className="flex items-center gap-2 font-mono text-[11px] tracking-[0.14em] text-ash-dim">
                 <PinIcon className="size-4" />
                 {site.locale}

@@ -18,10 +18,6 @@ export const site = {
     "HOTTWIREE builds custom websites for South African businesses. R3,300 flat, live in 5 business days, 21 days free support on every build. Durban-based freelance developer Vysan Chellan.",
   url: "https://hottwiree.vercel.app",
   locale: "Durban, KwaZulu-Natal · South Africa",
-  instagram: {
-    handle: "@hott_wiree",
-    url: "https://instagram.com/hott_wiree",
-  },
 } as const;
 
 export const owner = {

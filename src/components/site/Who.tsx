@@ -1,10 +1,14 @@
 "use client";
 
+import Image from "next/image";
 import { owner, site, contact } from "@/lib/site";
+import blur from "@/lib/blur.json";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { Button } from "@/components/ui/button";
 import { InstagramIcon, PinIcon, WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
+
+const blurMap = blur as Record<string, string>;
 
 const SPEC: readonly (readonly [string, string])[] = [
   ["Name", owner.name],
@@ -34,40 +38,45 @@ export default function Who() {
           <div className="lg:sticky lg:top-28">
             <div className="wire-border overflow-hidden rounded-2xl border border-hairline bg-ink-2">
               {/*
-                TODO: Vysan — drop a photo of yourself at /public/vysan.jpg and
-                swap this block for a next/image. Until then this stays a mark
-                rather than a stock face, because a stock face reads as a lie.
+                TODO: Vysan — when you have a good photo of yourself, drop it at
+                /public/vysan.jpg and point this Image at it. Until then this is
+                Durban rather than a stock face: it makes the "based in Durban"
+                claim concrete without pretending to be you.
               */}
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink-3">
-                <div
-                  aria-hidden
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage:
-                      "radial-gradient(85% 60% at 50% 78%, rgba(255,122,26,0.26) 0%, rgba(232,72,10,0.09) 40%, rgba(8,7,11,0) 72%)",
-                  }}
+                <Image
+                  src="/durban.webp"
+                  alt="The arch of Moses Mabhida Stadium, Durban"
+                  fill
+                  sizes="(min-width: 1024px) 40vw, 92vw"
+                  placeholder={blurMap.durban ? "blur" : "empty"}
+                  blurDataURL={blurMap.durban}
+                  className="object-cover"
                 />
+                {/* Drafting grid, so the plate reads as a document not a postcard. */}
                 <div
                   aria-hidden
-                  className="absolute inset-0 opacity-[0.14]"
+                  className="absolute inset-0 opacity-[0.10]"
                   style={{
                     backgroundImage:
-                      "linear-gradient(var(--color-hairline) 1px, transparent 1px), linear-gradient(90deg, var(--color-hairline) 1px, transparent 1px)",
+                      "linear-gradient(var(--color-bone) 1px, transparent 1px), linear-gradient(90deg, var(--color-bone) 1px, transparent 1px)",
                     backgroundSize: "34px 34px",
                   }}
                 />
-                <span className="absolute inset-0 grid place-items-center">
-                  <span className="filament-text animate-filament font-display text-[clamp(5rem,16vw,9rem)] leading-none tracking-[-0.05em]">
-                    VC
-                  </span>
-                </span>
-                <span
+                <div
                   aria-hidden
-                  className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(255,122,26,0.10),transparent)]"
+                  className="absolute inset-0 bg-[linear-gradient(to_top,rgba(8,7,11,0.88)_0%,rgba(8,7,11,0.08)_42%,rgba(8,7,11,0.32)_100%)]"
                 />
-                <span className="label absolute bottom-4 left-5 !text-[9px]">
-                  Operator
-                </span>
+                <div className="absolute inset-x-5 bottom-4 flex items-end justify-between gap-4">
+                  <span className="label !text-[9px] !text-bone">
+                    Moses Mabhida
+                    <br />
+                    Durban, KZN
+                  </span>
+                  <span className="font-mono text-[9px] tabular-nums text-ash-dim">
+                    29°49&rsquo;S 31°01&rsquo;E
+                  </span>
+                </div>
               </div>
 
               <dl className="divide-y divide-hairline border-t border-hairline">

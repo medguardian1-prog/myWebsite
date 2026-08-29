@@ -2,6 +2,7 @@ import Motion from "@/components/site/Motion";
 import SmoothScroll from "@/components/site/SmoothScroll";
 import FilamentCursor from "@/components/site/FilamentCursor";
 import Grain from "@/components/site/Grain";
+import ScrollWire from "@/components/site/ScrollWire";
 import Nav from "@/components/site/Nav";
 import Hero from "@/components/site/Hero";
 import SpecBand from "@/components/site/SpecBand";
@@ -35,6 +36,7 @@ export default function Page() {
       <SmoothScroll />
       <FilamentCursor />
       <Grain />
+      <ScrollWire />
       <Nav />
 
       <main>

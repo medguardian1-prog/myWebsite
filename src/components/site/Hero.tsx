@@ -141,7 +141,7 @@ export default function Hero() {
       <div className="relative z-10 mt-16 md:mt-0">
         <div className="px-[var(--gutter)]">
           {/* Mounted only once `ready` so the draw-on stagger plays in view. */}
-          {ready && <WireMark draw className="h-auto w-full text-bone" />}
+          {ready && <WireMark power className="h-auto w-full text-bone" />}
         </div>
 
         {/* ---- floor strip ---- */}

@@ -189,16 +189,86 @@ body {
  * Motion primitives
  * ------------------------------------------------------------------ */
 
-@keyframes wire-draw {
+/* ------------------------------------------------------------------ *
+ * Logotype switch-on
+ * A filament coming up to temperature: dark, a couple of flickers as the
+ * current catches, then a settle to bone. Colours are hard-coded through the
+ * ember ramp because the point is the heat, not the theme.
+ * ------------------------------------------------------------------ */
+@keyframes mark-heat {
+  0% {
+    opacity: 0;
+    stroke: #3a2214;
+    filter: none;
+  }
+  14% {
+    opacity: 0.7;
+    stroke: #e8480a;
+  }
+  24% {
+    opacity: 0.22;
+    stroke: #7a2f0c;
+  }
+  40% {
+    opacity: 0.95;
+    stroke: #ff7a1a;
+    filter: drop-shadow(0 0 10px rgba(255, 122, 26, 0.55));
+  }
+  52% {
+    opacity: 0.62;
+    stroke: #c2560f;
+  }
+  74% {
+    opacity: 1;
+    stroke: #ffc978;
+    filter: drop-shadow(0 0 7px rgba(255, 201, 120, 0.35));
+  }
+  100% {
+    opacity: 1;
+    stroke: currentColor;
+    filter: none;
+  }
+}
+.mark-letter {
+  opacity: 0;
+  animation: mark-heat 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes mark-surge {
+  from {
+    stroke-dashoffset: 1;
+  }
   to {
     stroke-dashoffset: 0;
   }
 }
-@keyframes wire-node {
-  to {
+.mark-surge {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: mark-surge 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+}
+
+@keyframes mark-node {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  55% {
     opacity: 1;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
+.mark-node {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mark-node 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 
 @keyframes filament-shift {
   0%,
@@ -220,10 +290,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .wire-anim {
+  .mark-letter,
+  .mark-surge,
+  .mark-node {
     animation: none !important;
-    stroke-dashoffset: 0 !important;
     opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+    transform: none !important;
   }
   *,
   *::before,

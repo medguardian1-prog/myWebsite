@@ -144,6 +144,35 @@ off-screen or when the tab is hidden, and doesn't run at all under reduced
 motion. If WebGL is unavailable the static gradient underneath carries the
 design.
 
+### On the logotype animation
+
+The mark doesn't draw itself on like a pen — that's the portfolio version. It
+performs a **switch-on**: the terminals snap live, a surge runs the length of
+the hot wire, then each letter heats through the ember ramp (dark red →
+flicker → orange → white → settles to bone) with a drop-shadow glow that fades
+as it cools.
+
+The order is the detail worth keeping: letters light by their *distance from
+the wire*, not left to right. The two Ts sit on it so they go first, then O and
+W, then H and I, and the trailing Es last — so the current visibly spreads
+outward through the word. See `HOPS` in `WireMark.tsx` if you reorder letters.
+
+### On the photograph
+
+`public/durban.webp` is the arch of Moses Mabhida Stadium, shot by Riaan
+Myburgh, released **CC0** via Unsplash and mirrored on Wikimedia Commons. No
+attribution is legally required; it's noted here because it's the right thing
+to record.
+
+It's duotoned into the palette rather than dropped in raw — luminance is mapped
+along a power curve onto a ramp from ink to hot gold, so the sky crushes to
+near-black and only the lit edge of the arch and its cable stays glow. The
+cables happen to read as filaments, which is why this image and not a skyline.
+
+It sits where a founder photo would go, with a drafting grid and the site's
+coordinates over it. When Vysan has a good photo of himself, it swaps out — the
+TODO is in `Who.tsx`.
+
 ### On the nav
 
 The nav is a title block, not a floating pill: a full-width strip divided into

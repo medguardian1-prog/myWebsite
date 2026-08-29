@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * HOTTWIREE design tokens
+ * Palette is deliberately narrow: a molten "filament" gradient for heat,
+ * one acid "volt" green for live/status signals, everything else is ash.
+ * ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #08070b;
+  --color-ink-2: #0d0c12;
+  --color-ink-3: #14121a;
+  --color-hairline: #221f2b;
+  --color-bone: #f4efe6;
+  --color-ash: #8a8598;
+  --color-ash-dim: #6e6979;
+
+  --color-filament: #ff7a1a;
+  --color-filament-hot: #ff3d00;
+  --color-filament-gold: #ffc24b;
+  --color-filament-white: #ffe9a8;
+  --color-volt: #b6ff3d;
+
+  --font-display: var(--font-instrument), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-jb), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+:root {
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  --filament-gradient: linear-gradient(
+    100deg,
+    var(--color-filament-hot) 0%,
+    var(--color-filament) 34%,
+    var(--color-filament-gold) 62%,
+    var(--color-filament-white) 100%
+  );
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--color-hairline);
+}
+
+html {
+  background-color: var(--color-ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Lenis drives scroll; the native smooth-scroll would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  background-color: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  font-synthesis-weight: none;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--color-filament);
+  color: var(--color-ink);
+}
+
+/* Native scrollbar, restyled — Lenis keeps it in play. */
+::-webkit-scrollbar {
+  width: 9px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-hairline);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-filament);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-volt);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Hide the OS cursor only when the custom one is actually running. */
+html[data-cursor="on"],
+html[data-cursor="on"] * {
+  cursor: none !important;
+}
+
+/* ------------------------------------------------------------------ *
+ * Type
+ * ------------------------------------------------------------------ */
+.font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.84;
+  letter-spacing: -0.03em;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: clamp(0.6rem, 0.72vw, 0.7rem);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+}
+
+/* ------------------------------------------------------------------ *
+ * Signature surfaces
+ * ------------------------------------------------------------------ */
+.filament-text {
+  background: var(--filament-gradient);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.filament-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-filament) 22%,
+    var(--color-filament-gold) 55%,
+    transparent
+  );
+  opacity: 0.55;
+}
+
+.glass {
+  background: color-mix(in oklab, var(--color-ink-2) 62%, transparent);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid color-mix(in oklab, var(--color-bone) 8%, transparent);
+}
+
+/* A hairline that lights up on hover — used on cards and list rows. */
+.wire-border {
+  position: relative;
+  isolation: isolate;
+}
+.wire-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--filament-gradient);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease-out-expo);
+  pointer-events: none;
+}
+.wire-border:hover::after,
+.wire-border[data-live="true"]::after {
+  opacity: 1;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* ------------------------------------------------------------------ *
+ * Motion primitives
+ * ------------------------------------------------------------------ */
+@keyframes marquee-x {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.animate-marquee {
+  animation: marquee-x var(--marquee-duration, 38s) linear infinite;
+}
+
+@keyframes filament-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.animate-filament {
+  animation: filament-shift 7s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.8);
+  }
+}
+.animate-live {
+  animation: live-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes ring-out {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
+}
+.animate-ring {
+  animation: ring-out 2.4s var(--ease-out-expo) infinite;
+}
+
+/* Split-text lines: each line sits in an overflow-hidden mask. */
+.line-mask {
+  display: block;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  html[data-cursor="on"],
+  html[data-cursor="on"] * {
+    cursor: auto !important;
+  }
+}

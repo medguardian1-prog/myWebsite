@@ -54,7 +54,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="group flex items-center gap-2.5 text-[14px] text-ash transition-colors duration-300 hover:text-bone"
               >
-                <WhatsAppIcon className="size-4 text-ash-dim transition-colors group-hover:text-volt" />
+                <WhatsAppIcon className="size-4 text-ash-dim transition-colors group-hover:text-filament" />
                 {contact.phoneDisplay}
               </a>
             </li>

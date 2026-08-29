@@ -11,10 +11,10 @@ import Magnetic from "./Magnetic";
 import { WhatsAppIcon } from "./Icons";
 
 /**
- * The credibility engine. On desktop the section pins and the five demos
- * travel sideways under a filament progress rail; below 1024px that becomes a
- * plain vertical stack, because a hijacked horizontal scroll on a phone is
- * how you lose the exact person this site is trying to convince.
+ * The credibility engine. On desktop the section pins and the five demo
+ * builds travel sideways under a filament progress rail; below 1024px that
+ * becomes a plain vertical stack, because a hijacked horizontal scroll on a
+ * phone is how you lose the exact person this site is trying to convince.
  */
 export default function Work() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -70,21 +70,23 @@ export default function Work() {
       {/* ---- header ---- */}
       <div className="px-[var(--gutter)]">
         <div className="flex items-baseline gap-4">
-          <span className="label !text-filament">(01)</span>
-          <span className="label">The proof</span>
+          <span className="label !text-filament">(02)</span>
+          <span className="label">The work</span>
         </div>
 
         <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
           <SplitWords
             as="h2"
-            text="Five real businesses. Five sites you can open right now."
+            text="Five builds. Open every one of them."
             className="max-w-[16ch] font-display text-[clamp(2.3rem,6.2vw,5.6rem)] leading-[0.92] tracking-[-0.035em]"
           />
           <FadeUp delay={0.1}>
             <p className="max-w-[42ch] text-[15px] leading-relaxed text-ash md:text-base">
-              Not mockups, not concepts — live, deployed sites doing work for real
-              owners. Hover a card on desktop and the actual site loads in behind
-              the screenshot. Click through and judge it yourself.
+              These are demonstration builds, not client work — real, deployed and
+              fully working, but built around invented businesses to show you a
+              standard rather than a client list. Hover one on desktop and the
+              site itself loads in behind the screenshot. Open them and judge the
+              craft.
             </p>
           </FadeUp>
         </div>
@@ -112,17 +114,18 @@ export default function Work() {
           <div className="flex w-[min(38vw,520px)] shrink-0 flex-col justify-center gap-6 pr-[var(--gutter)]">
             <p className="label !text-filament">(next)</p>
             <p className="font-display text-[clamp(2rem,3.4vw,3.4rem)] leading-[0.95] tracking-[-0.03em]">
-              Your business could be
-              <span className="italic filament-text animate-filament"> number six</span>.
+              Yours gets built to the
+              <span className="italic filament-text animate-filament"> same standard</span>.
             </p>
             <p className="max-w-[34ch] text-[15px] leading-relaxed text-ash">
-              Same standard, same price, same 21 days of free support after launch.
+              Around your business rather than an invented one. Five business days,
+              R3,300, and 21 days of free support after it goes live.
             </p>
             <Magnetic strength={0.28} className="self-start">
               <Button asChild variant="filament" size="lg" shape="pill">
                 <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon className="size-4" />
-                  Get yours built
+                  Start yours
                 </a>
               </Button>
             </Magnetic>
@@ -150,8 +153,12 @@ export default function Work() {
           <div className="wire-border rounded-2xl border border-hairline p-7">
             <p className="label !text-filament">(next)</p>
             <p className="mt-4 font-display text-[clamp(1.9rem,8vw,2.6rem)] leading-[0.98] tracking-[-0.03em]">
-              Your business could be
-              <span className="italic filament-text animate-filament"> number six</span>.
+              Yours gets built to the
+              <span className="italic filament-text animate-filament"> same standard</span>.
+            </p>
+            <p className="mt-4 text-[14px] leading-relaxed text-ash">
+              Around your business rather than an invented one. Five business days,
+              R3,300, and 21 days of free support after it goes live.
             </p>
             <Button
               asChild
@@ -162,7 +169,7 @@ export default function Work() {
             >
               <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                 <WhatsAppIcon className="size-4" />
-                Get yours built
+                Start yours
               </a>
             </Button>
           </div>

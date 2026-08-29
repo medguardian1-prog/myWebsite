@@ -10,9 +10,13 @@ import { cn } from "@/lib/utils";
 const blurMap = blur as Record<string, string>;
 
 /**
- * One demo. The still is a real screenshot of the live site; hold the pointer
- * on it for a beat and the actual site loads in behind it, scaled down to fit.
- * Proof beats a mockup, and a mockup beats a promise.
+ * One demonstration build.
+ *
+ * The still is a real screenshot of the deployed site; hold the pointer on it
+ * and the site itself loads in behind, scaled down from a desktop viewport.
+ * The "Demo build" badge is not optional — these were built to show a standard,
+ * not delivered to paying owners, and the card has to say so where it's read
+ * rather than in a footnote.
  */
 export default function ProjectCard({
   project,
@@ -75,8 +79,8 @@ export default function ProjectCard({
             {project.name}
           </h3>
         </div>
-        <span className="label hidden shrink-0 !text-ash-dim sm:block">
-          {project.year}
+        <span className="shrink-0 rounded-full border border-hairline px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.16em] text-ash-dim">
+          Demo build
         </span>
       </div>
 
@@ -84,29 +88,30 @@ export default function ProjectCard({
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
-        data-cursor="view"
-        data-cursor-label="Live"
-        aria-label={`Open the live ${project.name} site in a new tab`}
+        aria-label={`Open the ${project.name} demo build in a new tab`}
         className="wire-border relative block overflow-hidden rounded-2xl border border-hairline bg-ink-2"
       >
-        {/* Chrome bar: the real domain, because the real domain is the proof. */}
+        {/* Chrome bar: the real domain, because it really is deployed there. */}
         <div className="flex items-center gap-2.5 border-b border-hairline bg-ink-3/80 px-4 py-2.5">
           <span
             className={cn(
               "size-1.5 shrink-0 rounded-full transition-colors duration-500",
-              live ? "bg-volt animate-live" : "bg-ash-dim",
+              live ? "bg-filament" : "bg-ash-dim",
             )}
           />
           <span className="truncate font-mono text-[10px] tracking-[0.1em] text-ash">
             {host}
           </span>
-          <ArrowOutIcon className="ml-auto size-3.5 shrink-0 text-ash-dim transition-all duration-500 group-hover/card:-translate-y-0.5 group-hover/card:translate-x-0.5 group-hover/card:text-filament" />
+          <span className="ml-auto flex shrink-0 items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.16em] text-ash-dim transition-colors duration-500 group-hover/card:text-filament">
+            Open
+            <ArrowOutIcon className="size-3 transition-transform duration-500 group-hover/card:-translate-y-0.5 group-hover/card:translate-x-0.5" />
+          </span>
         </div>
 
         <div ref={frameRef} className="relative aspect-[16/10] w-full overflow-hidden">
           <Image
             src={project.shot}
-            alt={`Screenshot of the ${project.name} website`}
+            alt={`Screenshot of the ${project.name} demo build`}
             fill
             sizes="(min-width: 1024px) 60vw, 92vw"
             placeholder={blurMap[project.slug] ? "blur" : "empty"}

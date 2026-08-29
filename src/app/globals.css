@@ -2,23 +2,26 @@
 
 /* ------------------------------------------------------------------ *
  * HOTTWIREE design tokens
- * Palette is deliberately narrow: a molten "filament" gradient for heat,
- * one acid "volt" green for live/status signals, everything else is ash.
+ *
+ * Two colours do all the work: one ember ramp for the brand, and the real
+ * WhatsApp green reserved strictly for WhatsApp affordances so it reads as a
+ * platform signal rather than as decoration. Everything else is ink and ash.
  * ------------------------------------------------------------------ */
 @theme {
   --color-ink: #08070b;
-  --color-ink-2: #0d0c12;
-  --color-ink-3: #14121a;
-  --color-hairline: #221f2b;
-  --color-bone: #f4efe6;
-  --color-ash: #8a8598;
-  --color-ash-dim: #6e6979;
+  --color-ink-2: #0d0c11;
+  --color-ink-3: #141319;
+  --color-hairline: #232128;
+  --color-bone: #f3efe8;
+  --color-ash: #8e8a95;
+  --color-ash-dim: #6a6672;
 
   --color-filament: #ff7a1a;
-  --color-filament-hot: #ff3d00;
-  --color-filament-gold: #ffc24b;
-  --color-filament-white: #ffe9a8;
-  --color-volt: #b6ff3d;
+  --color-filament-hot: #e8480a;
+  --color-filament-gold: #ffc978;
+
+  /* WhatsApp brand green. Only ever used on WhatsApp buttons and links. */
+  --color-wa: #25d366;
 
   --font-display: var(--font-instrument), ui-serif, Georgia, serif;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -30,12 +33,12 @@
 
 :root {
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
+  /* Three stops, not five — the extra highlight read as a rainbow. */
   --filament-gradient: linear-gradient(
     100deg,
     var(--color-filament-hot) 0%,
-    var(--color-filament) 34%,
-    var(--color-filament-gold) 62%,
-    var(--color-filament-white) 100%
+    var(--color-filament) 46%,
+    var(--color-filament-gold) 100%
   );
   color-scheme: dark;
 }
@@ -91,15 +94,9 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-volt);
+  outline: 2px solid var(--color-filament);
   outline-offset: 3px;
   border-radius: 2px;
-}
-
-/* Hide the OS cursor only when the custom one is actually running. */
-html[data-cursor="on"],
-html[data-cursor="on"] * {
-  cursor: none !important;
 }
 
 /* ------------------------------------------------------------------ *
@@ -191,18 +188,6 @@ html[data-cursor="on"] * {
 /* ------------------------------------------------------------------ *
  * Motion primitives
  * ------------------------------------------------------------------ */
-@keyframes marquee-x {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-.animate-marquee {
-  animation: marquee-x var(--marquee-duration, 38s) linear infinite;
-}
-
 @keyframes filament-shift {
   0%,
   100% {
@@ -213,36 +198,7 @@ html[data-cursor="on"] * {
   }
 }
 .animate-filament {
-  animation: filament-shift 7s ease-in-out infinite;
-}
-
-@keyframes live-pulse {
-  0%,
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.35;
-    transform: scale(0.8);
-  }
-}
-.animate-live {
-  animation: live-pulse 1.8s ease-in-out infinite;
-}
-
-@keyframes ring-out {
-  0% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(2.1);
-    opacity: 0;
-  }
-}
-.animate-ring {
-  animation: ring-out 2.4s var(--ease-out-expo) infinite;
+  animation: filament-shift 14s ease-in-out infinite;
 }
 
 /* Split-text lines: each line sits in an overflow-hidden mask. */
@@ -259,9 +215,5 @@ html[data-cursor="on"] * {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  html[data-cursor="on"],
-  html[data-cursor="on"] * {
-    cursor: auto !important;
   }
 }

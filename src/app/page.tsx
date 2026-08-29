@@ -1,11 +1,11 @@
 import Motion from "@/components/site/Motion";
-import Preloader from "@/components/site/Preloader";
 import SmoothScroll from "@/components/site/SmoothScroll";
-import Cursor from "@/components/site/Cursor";
+import FilamentCursor from "@/components/site/FilamentCursor";
 import Grain from "@/components/site/Grain";
 import Nav from "@/components/site/Nav";
 import Hero from "@/components/site/Hero";
-import Ticker from "@/components/site/Ticker";
+import SpecBand from "@/components/site/SpecBand";
+import SearchProof from "@/components/site/SearchProof";
 import Work from "@/components/site/Work";
 import Pricing from "@/components/site/Pricing";
 import Process from "@/components/site/Process";
@@ -15,26 +15,32 @@ import Footer from "@/components/site/Footer";
 import FloatingWhatsApp from "@/components/site/FloatingWhatsApp";
 
 /**
- * Section order is deliberate and not the usual one: the proof comes before the
- * story. Almost everyone landing here arrived from a cold WhatsApp message and
- * has exactly one question — "can this guy actually build?" — so the five live
- * demos answer it before anything asks them to read about anyone.
+ * Order is an argument, made in sequence:
+ *   Hero        — you have a problem
+ *   SpecBand    — here is the cost and the timeline, before you have to ask
+ *   SearchProof — here is the problem, drawn
+ *   Work        — here is proof I can build
+ *   Pricing     — here is exactly what it costs
+ *   Process     — here is how little you have to do
+ *   Who         — here is who you're dealing with
+ *   Contact     — here are two ways to start
  *
- * Preloader must stay first in the tree: it sets the ignition flag the hero
- * waits on before playing its entrance.
+ * The price band sits second on purpose. Almost everyone arriving from a cold
+ * WhatsApp message is trying to find out one thing before they'll read
+ * anything: what does this cost. Making them hunt for it loses them.
  */
 export default function Page() {
   return (
     <Motion>
-      <Preloader />
       <SmoothScroll />
-      <Cursor />
+      <FilamentCursor />
       <Grain />
       <Nav />
 
       <main>
         <Hero />
-        <Ticker />
+        <SpecBand />
+        <SearchProof />
         <Work />
         <Pricing />
         <Process />

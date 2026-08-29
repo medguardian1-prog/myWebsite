@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * shadcn/ui Switch, rebuilt as a physical breaker toggle: square track,
- * volt-green when live, hairline grey when open.
+ * ember when live, hairline grey when open.
  */
 function Switch({
   className,
@@ -17,9 +17,9 @@ function Switch({
       data-slot="switch"
       className={cn(
         "peer inline-flex h-7 w-13 shrink-0 items-center rounded-none border border-hairline p-[3px] transition-colors duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]",
-        "data-[state=checked]:border-volt data-[state=checked]:bg-[color-mix(in_oklab,var(--color-volt)_16%,transparent)]",
+        "data-[state=checked]:border-filament data-[state=checked]:bg-[color-mix(in_oklab,var(--color-filament)_16%,transparent)]",
         "data-[state=unchecked]:bg-ink-3",
-        "focus-visible:outline-2 focus-visible:outline-volt focus-visible:outline-offset-2",
+        "focus-visible:outline-2 focus-visible:outline-filament focus-visible:outline-offset-2",
         className,
       )}
       {...props}
@@ -27,7 +27,7 @@ function Switch({
       <SwitchPrimitive.Thumb
         className={cn(
           "pointer-events-none block h-full w-6 rounded-none transition-transform duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]",
-          "data-[state=checked]:translate-x-[26px] data-[state=checked]:bg-volt",
+          "data-[state=checked]:translate-x-[26px] data-[state=checked]:bg-filament",
           "data-[state=unchecked]:translate-x-0 data-[state=unchecked]:bg-ash-dim",
         )}
       />

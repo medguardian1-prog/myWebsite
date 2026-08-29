@@ -33,7 +33,7 @@ export default function Pricing() {
   return (
     <section id="pricing" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
       <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(02)</span>
+        <span className="label !text-filament">(03)</span>
         <span className="label">The price</span>
       </div>
 
@@ -55,14 +55,14 @@ export default function Pricing() {
       <FadeUp>
         <div className="wire-border mt-14 flex flex-col gap-5 overflow-hidden rounded-2xl border border-hairline bg-ink-2 p-6 md:flex-row md:items-center md:gap-8 md:p-8">
           <div className="flex shrink-0 items-center gap-4">
-            <span className="grid size-12 shrink-0 place-items-center rounded-full border border-volt/40 bg-volt/10 text-volt">
+            <span className="grid size-12 shrink-0 place-items-center rounded-full border border-filament/40 bg-filament/10 text-filament">
               <SupportIcon className="size-5" />
             </span>
             <div>
               <p className="font-display text-[clamp(1.6rem,3.4vw,2.4rem)] leading-none tracking-[-0.02em]">
                 {pricing.support.headline}
               </p>
-              <p className="label mt-2 !text-volt">Included · every single build</p>
+              <p className="label mt-2 !text-filament">Included · every single build</p>
             </div>
           </div>
           <div className="h-px w-full bg-hairline md:h-12 md:w-px" />
@@ -129,7 +129,7 @@ export default function Pricing() {
                   R3,300{" "}
                   <span className="text-ash-dim">once-off</span>
                   {care && (
-                    <span className="text-volt"> + R400 / month</span>
+                    <span className="text-filament"> + R400 / month</span>
                   )}
                 </p>
               </div>
@@ -155,7 +155,7 @@ export default function Pricing() {
             <div className="wire-border flex h-full flex-col rounded-2xl border border-hairline bg-ink-2 p-7 md:p-8">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <span className="label !text-volt">Optional add-on</span>
+                  <span className="label !text-filament">Optional add-on</span>
                   <h3 className="mt-3 font-display text-[clamp(1.6rem,2.6vw,2.1rem)] leading-none tracking-[-0.02em]">
                     {pricing.care.label}
                   </h3>
@@ -188,7 +188,7 @@ export default function Pricing() {
               <ul className="mt-6 grid gap-2.5 border-t border-hairline pt-6">
                 {pricing.care.includes.map((item) => (
                   <li key={item} className="flex gap-3 text-[13.5px] leading-snug text-bone/80">
-                    <span className="mt-[7px] size-1 shrink-0 rounded-full bg-volt" />
+                    <span className="mt-[7px] size-1 shrink-0 rounded-full bg-filament" />
                     {item}
                   </li>
                 ))}

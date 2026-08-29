@@ -22,17 +22,10 @@ export default function Hero() {
   const [ready, setReady] = useState(false);
   const markRef = useRef<HTMLDivElement>(null);
 
-  // Hold the entrance until the ignition curtain is out of the way, but only
-  // if it is actually running — returning visitors should not stare at a blank.
-  useEffect(() => {
-    if (document.documentElement.dataset.ignition !== "running") {
-      setReady(true);
-      return;
-    }
-    const on = () => setReady(true);
-    window.addEventListener("hw:ignited", on, { once: true });
-    return () => window.removeEventListener("hw:ignited", on);
-  }, []);
+  // Play the entrance on mount. There is no preloader to wait behind any
+  // more — a percentage counter in front of a sales page costs more than the
+  // drama is worth.
+  useEffect(() => setReady(true), []);
 
   // Pointer position feeds a mask that reveals a hotter copy of the wordmark
   // only where the cursor is — written straight to CSS vars, never to state.
@@ -93,8 +86,8 @@ export default function Hero() {
           animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <span className="size-1.5 rounded-full bg-volt animate-live" />
-          <span className="label !text-bone">Available for work</span>
+          <span className="size-1.5 rounded-full bg-filament " />
+          <span className="label !text-bone">Taking on work</span>
         </motion.div>
 
         <motion.div
@@ -117,7 +110,7 @@ export default function Hero() {
       >
         <span className="h-24 w-px bg-[linear-gradient(to_bottom,transparent,var(--color-filament),transparent)]" />
         <span className="label !text-[9px] !text-ash-dim">
-          Freelance web development — est. Durban
+          Freelance web development · Durban
         </span>
       </div>
 
@@ -156,9 +149,11 @@ export default function Hero() {
             transition={{ duration: 1, delay: 0.55, ease: EASE }}
           >
             I&rsquo;m {owner.name.split(" ")[0]} — I build custom websites for South
-            African businesses. Designed properly, built fast, live in days.{" "}
-            <span className="text-bone">R3,300 flat</span>, with{" "}
-            <span className="text-bone">21 days free support</span> on every build.
+            African businesses. Designed properly, built around what you actually
+            sell, and{" "}
+            <span className="text-bone">live in 5 business days</span>.{" "}
+            <span className="text-bone">R3,300 flat</span>, with 21 days of free
+            support on every build.
           </motion.p>
 
           <motion.div
@@ -177,8 +172,8 @@ export default function Hero() {
             </Magnetic>
             <Magnetic strength={0.22}>
               <Button asChild variant="glass" size="lg" shape="pill">
-                <a href="#work">
-                  See the work
+                <a href="#found">
+                  See what changes
                   <ArrowDownIcon className="size-3.5" />
                 </a>
               </Button>
@@ -234,7 +229,7 @@ export default function Hero() {
           animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.9 }}
         >
-          <a href="#work" className="group flex items-center gap-3" data-cursor="link">
+          <a href="#found" className="group flex items-center gap-3">
             <span className="grid size-8 place-items-center rounded-full border border-hairline transition-colors duration-500 group-hover:border-filament">
               <ArrowDownIcon className="size-3 text-ash transition-transform duration-500 group-hover:translate-y-0.5 group-hover:text-filament" />
             </span>
@@ -243,7 +238,7 @@ export default function Hero() {
           <p className="label text-right !text-ash-dim">
             <span className="text-filament">R3,300</span> flat
             <span className="mx-2 opacity-40">/</span>
-            21 days free support
+            5 business days
           </p>
         </motion.div>
       </div>

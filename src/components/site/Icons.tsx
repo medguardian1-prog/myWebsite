@@ -131,3 +131,22 @@ export function PinIcon(props: P) {
     </svg>
   );
 }
+
+/** Magnifier for the search illustration. */
+export function SearchIcon(props: P) {
+  return (
+    <svg {...base} aria-hidden {...props}>
+      <circle cx="10.5" cy="10.5" r="6.5" />
+      <path d="m15.5 15.5 5 5" />
+    </svg>
+  );
+}
+
+/** Filled star, for the rating row in the search illustration. */
+export function StarIcon(props: P) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...props}>
+      <path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.44 6.2 20.5l1.1-6.47L2.6 9.45l6.5-.95z" />
+    </svg>
+  );
+}

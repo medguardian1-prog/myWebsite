@@ -31,19 +31,24 @@ Google reads.
 | What | Where |
 | --- | --- |
 | Prices, package contents, 21-day support wording | `src/lib/site.ts` → `pricing` |
+| Turnaround (currently 5 business days) | `src/lib/site.ts` → `turnaround` |
+| The four numbers in the band under the hero | `src/lib/site.ts` → `specs` |
 | Phone / email / WhatsApp message | `src/lib/site.ts` → `contact` |
-| The five demo projects | `src/lib/site.ts` → `projects` |
+| The five demo builds | `src/lib/site.ts` → `projects` |
 | Your bio and study details | `src/lib/site.ts` → `owner` |
-| Tagline (5 options written, 1 in use) | `src/lib/site.ts` → `site.tagline` |
+| Tagline (4 options written, 1 in use) | `src/lib/site.ts` → `site.tagline` |
 | Colours, fonts, motion curves | `src/app/globals.css` → the `@theme` block |
 | Section order | `src/app/page.tsx` |
 
 ### Things marked TODO for you
 
-- Each project's one-line description is a sensible read of what the site does,
-  taken from the live site itself — but it's a guess about how *you'd* describe
-  the job. Every one is tagged `{/* TODO: Vysan confirm/replace this description */}`
-  in `src/lib/site.ts` and `src/components/site/ProjectCard.tsx`.
+- Each build's one-line description says what that build demonstrates. Every
+  one is tagged `{/* TODO: Vysan confirm/replace this description */}` in
+  `src/lib/site.ts` and `src/components/site/ProjectCard.tsx`.
+- **If any of the five ever becomes real client work, say so.** The site
+  currently calls them demonstration builds everywhere they appear — heading,
+  badge on each card, and the closing panel. That's deliberate (see below);
+  swap the wording the day it stops being true, not before.
 - The "Who builds it" panel shows a `VC` monogram plate where your photo should
   go. Drop a photo at `public/vysan.jpg` and swap the marked block in
   `src/components/site/Who.tsx` for a `next/image`. It's deliberately not a
@@ -51,45 +56,62 @@ Google reads.
 
 ### Tagline options
 
-1. **"Websites with a live current."** ← in use
-2. "Sites that don't sit still."
+1. **"Websites for businesses that can't be found."** ← in use
+2. "Built properly. Live in five days."
 3. "Wired for business. Built in Durban."
-4. "Your business, fully charged."
-5. "Cold outreach. Hot websites."
+4. "A real website, for what a template costs."
 
 ---
 
 ## Why the sections are in this order
 
-Hero → **Work** → Pricing → Process → Who → Contact.
+Hero → **Spec band** → Search proof → Work → Pricing → Process → Who → Contact.
 
-The proof comes before the story. Nearly everyone landing here arrives from a
-cold WhatsApp message with exactly one question — *can this guy actually build?*
-— so the five live demos answer it before anything asks them to read a bio. If
-you'd rather lead with the About section, reorder the components in
-`src/app/page.tsx`; nothing else depends on the order except `<Preloader />`,
-which must stay first (the hero waits on the flag it sets).
+The four numbers land second, before anything asks the visitor to read. Almost
+everyone here arrived from a cold WhatsApp message and is trying to answer one
+question before they'll invest attention: *what does this cost.* Making them
+hunt for it loses them.
+
+Then the argument runs in order — here's the problem, here's proof I can build,
+here's the exact price, here's how little you have to do, here's who you're
+dealing with, here are two ways to start. Reorder in `src/app/page.tsx` if you
+disagree; nothing depends on the order.
 
 ---
 
-## How the demo previews work
+## The demo builds are labelled as demo builds
 
-Each card shows a real screenshot of the live site. On desktop, hold the pointer
-over a card for about half a second and the **actual live site loads in an
-iframe** behind the screenshot, scaled down from a 1440px desktop viewport. Only
-one preview mounts at a time, and it unmounts on pointer-out. On touch devices
-it never mounts at all — the screenshot stands on its own and the whole card is
-a link to the real thing.
+The five sites are real, deployed and fully working, but they were built around
+invented businesses to demonstrate a standard. They are **not** client work.
 
-The screenshots in `public/work/` were captured from the live sites. To refresh
-them: drop new PNGs in `public/work/`, then
+The site says so in three places: the section heading, a "Demo build" badge on
+every card, and the closing panel. An earlier draft implied they were live
+client sites doing work for real owners — that reads better right up until a
+prospect asks for a reference, and then it costs you the deal and the
+reputation. The craft on display is real, which is the part that actually
+sells.
 
-```bash
-node scripts/optimize-shots.mjs
-```
+Same reasoning applies to the search illustration in the section above it: the
+caption states plainly that it's drawn, and that the rankings and ratings are
+invented to show a pattern.
 
-which converts them to WebP and regenerates the blur placeholders in
-`src/lib/blur.json`.
+---
+
+## The search illustration
+
+The "(01) The problem" section draws a search results page and lets you flip
+between *without a website* and *with a website*.
+
+It is drawn, not screenshotted, and it deliberately does **not** use Google's
+logo, wordmark or colours. Putting their branding on a fabricated result
+implies an endorsement you don't have, and it's a trademark problem attached to
+your business rather than to a design decision. The copy refers to Google by
+name — which is ordinary descriptive use — while the panel stays a clearly
+labelled illustration.
+
+The competing results are drawn as grey bars rather than invented company
+names. It keeps the eye on the one row that matters and avoids putting a named
+business, real or invented, in a losing position.
 
 ---
 
@@ -103,8 +125,8 @@ which converts them to WebP and regenerates the blur placeholders in
   in the Process section
 - **Lenis** — smooth scroll, wired to GSAP's ticker so ScrollTrigger and the
   scroll position share one clock
-- **Framer Motion** — entrances, the mobile menu, micro-interactions
-- **Raw WebGL2** for the hero's filament field
+- **Framer Motion** — entrances, the mobile menu, the search-proof toggle
+- **Raw WebGL2** for the hero's filament field; **canvas 2D** for the cursor trail
 
 ### On the hero shader
 
@@ -118,13 +140,38 @@ off-screen or when the tab is hidden, and doesn't run at all under reduced
 motion. If WebGL is unavailable the static gradient underneath carries the
 design.
 
+### On the cursor
+
+The pointer drags a length of hot wire behind it — a chain of points easing
+toward the one ahead, drawn as a tapering stroke that cools from white through
+ember to dark. It whips on direction changes and collapses to nothing when you
+stop moving.
+
+The native cursor is deliberately **left visible**. Replacing it with a dot and
+a lagging ring is the single most recognisable "designer portfolio" tell, and
+hiding the real pointer costs usability on a page whose entire job is getting
+someone to press a button.
+
 ### Accessibility and motion
 
 `prefers-reduced-motion` is honoured throughout: Lenis doesn't initialise, the
-custom cursor stays off, the shader doesn't run, the ignition preloader is
-skipped, Framer Motion drops to opacity-only via `MotionConfig`, and the pinned
-horizontal gallery is replaced by the plain vertical stack — so no content
-becomes unreachable.
+cursor trail doesn't draw, the shader doesn't run, Framer Motion drops to
+opacity-only via `MotionConfig`, and the pinned horizontal gallery is replaced
+by the plain vertical stack — so no content becomes unreachable.
+
+There is no preloader. An earlier draft had an "ignition" sequence with a
+0–100 counter; a percentage countdown in front of a sales page costs more in
+bounced visitors than the drama is worth, particularly on a phone on mobile
+data.
+
+### On the palette
+
+Two colours, and they mean different things. The ember ramp
+(`#e8480a → #ff7a1a → #ffc978`) is the brand and carries every accent. The
+WhatsApp green (`#25d366`) appears **only** on WhatsApp affordances, so it
+reads as a platform signal rather than decoration. An earlier draft had an acid
+green as a second brand accent; two competing accents plus a four-stop gradient
+read as a template, so both were cut.
 
 ---
 

@@ -48,7 +48,7 @@ export default function Contact() {
 
       <div className="relative">
         <div className="flex items-baseline gap-4">
-          <span className="label !text-filament">(05)</span>
+          <span className="label !text-filament">(06)</span>
           <span className="label">The ask</span>
         </div>
 

@@ -55,9 +55,7 @@ export default function Nav() {
             className="group flex items-center gap-3"
             aria-label={`${site.name} — back to top`}
           >
-            <span className="relative grid size-2.5 place-items-center">
-              <span className="absolute inset-0 rounded-full bg-volt animate-live" />
-            </span>
+            <span aria-hidden className="size-2 rounded-full bg-filament" />
             <Wordmark className="text-[15px] font-semibold tracking-[0.16em] md:text-base" />
           </a>
 

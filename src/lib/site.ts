@@ -8,15 +8,14 @@ export const site = {
   /**
    * Tagline options considered — the first is the one in use.
    * Swap `tagline` to any of the others (or your own) and the whole site follows.
-   *  1. "Websites with a live current."          ← in use
-   *  2. "Sites that don't sit still."
+   *  1. "Websites for businesses that can't be found."   ← in use
+   *  2. "Built properly. Live in five days."
    *  3. "Wired for business. Built in Durban."
-   *  4. "Your business, fully charged."
-   *  5. "Cold outreach. Hot websites."
+   *  4. "A real website, for what a template costs."
    */
-  tagline: "Websites with a live current.",
+  tagline: "Websites for businesses that can't be found.",
   description:
-    "HOTTWIREE builds fast, custom websites for South African businesses. R3,300 flat, live in days, 21 days free support on every build. Durban-based freelance developer Vysan Chellan.",
+    "HOTTWIREE builds custom websites for South African businesses. R3,300 flat, live in 5 business days, 21 days free support on every build. Durban-based freelance developer Vysan Chellan.",
   url: "https://hottwiree.vercel.app",
   locale: "Durban, KwaZulu-Natal · South Africa",
   instagram: {
@@ -32,6 +31,14 @@ export const owner = {
   school: "Richfield Graduate Institute of Technology",
   year: "Final year",
   base: "Durban, KZN",
+} as const;
+
+/** Quoted turnaround, used in the spec band, pricing and process copy. */
+export const turnaround = {
+  value: "5",
+  unit: "business days",
+  label: "5 business days",
+  detail: "From go-ahead to live, once I have your content.",
 } as const;
 
 const WHATSAPP_MESSAGE =
@@ -53,75 +60,77 @@ export type Project = {
   slug: string;
   name: string;
   sector: string;
-  /** Short line describing the kind of business this was built for. */
+  /** What this build was made to demonstrate. */
   blurb: string;
   /** Two or three build highlights, shown as mono chips. */
   tags: readonly string[];
   url: string;
   shot: string;
-  year: string;
 };
 
+/**
+ * These are demonstration builds, not client work.
+ *
+ * Every one is real, deployed and fully working — but each was built to show a
+ * standard, using an invented business, rather than delivered to a paying
+ * owner. Nothing on this site should imply otherwise: it isn't true yet, and a
+ * client who finds out later has every reason to stop trusting the rest.
+ */
 export const projects: readonly Project[] = [
   {
     slug: "virelle",
     name: "Virelle",
-    sector: "Luxury real estate",
+    sector: "Property · Listings",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A high-end property brokerage: filterable listings, editorial photography and a discreet enquiry flow.",
-    tags: ["Listings + filters", "Light / dark mode", "Editorial motion"],
+      "A listings build: filterable inventory, light and dark modes, and an enquiry path that survives a long browse.",
+    tags: ["Filterable listings", "Light / dark", "Enquiry flow"],
     url: "https://sales-wb4k.vercel.app/",
     shot: "/work/virelle.webp",
-    year: "2026",
   },
   {
     slug: "rjs",
     name: "RJ's Guesthouse",
-    sector: "Hospitality · Durban",
+    sector: "Hospitality · Bookings",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "Self-catering studio apartments in Parlock. Rooms, amenities, real reviews and a one-tap WhatsApp booking.",
+      "A booking build: rooms, amenities and reviews arranged to get someone from arriving to messaging in one tap.",
     tags: ["WhatsApp bookings", "Gallery", "Reviews + map"],
     url: "https://rjs-guesthouse.vercel.app/",
     shot: "/work/rjs.webp",
-    year: "2026",
   },
   {
     slug: "topnotch",
     name: "Top Notch Creations",
-    sector: "Renovations & mobile homes",
+    sector: "Trades · Quotes",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A Cape Town trades business running eight services under one roof, with priced packages and a quote funnel.",
-    tags: ["Service grid", "Pricing packages", "Quote funnel"],
+      "A trades build: eight services laid out without clutter, priced packages, and a quote request that takes seconds.",
+    tags: ["Service grid", "Priced packages", "Quote funnel"],
     url: "https://top-notch-pi.vercel.app/",
     shot: "/work/topnotch.webp",
-    year: "2026",
   },
   {
     slug: "junes",
     name: "June's Studio",
-    sector: "Artist · Creative studio",
+    sector: "Creative · Catalogue",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "An original-artwork studio selling one-of-one drawings, with a collection wall and commission enquiries.",
-    tags: ["Collection wall", "Sold states", "Commission form"],
+      "A catalogue build: individual items with prices and sold states, plus a commission enquiry for everything else.",
+    tags: ["Catalogue", "Sold states", "Commission form"],
     url: "https://junes-studio.vercel.app/",
     shot: "/work/junes.webp",
-    year: "2026",
   },
   {
     slug: "zinnia",
     name: "Zinnia Nursery",
-    sector: "Childcare · Middelburg",
+    sector: "Childcare · Enquiries",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A warm, parent-facing daycare site built to win tours: programmes, daily routine and a booking CTA.",
-    tags: ["Programmes", "Parent trust cues", "Book-a-tour CTA"],
+      "A trust build: warm, parent-facing, with the details a parent actually checks before booking a tour.",
+    tags: ["Programmes", "Trust cues", "Book-a-tour CTA"],
     url: "https://daycare-seven-ruby.vercel.app/",
     shot: "/work/zinnia.webp",
-    year: "2026",
   },
 ];
 
@@ -137,10 +146,10 @@ export const pricing = {
     includes: [
       "Full landing page site, designed around your business",
       "Built custom — no drag-and-drop template",
-      "Mobile-first: looks right on the phone your customers actually use",
+      "Mobile-first: right on the phone your customers actually use",
       "Fast load times and clean, search-friendly markup",
       "WhatsApp, call and enquiry buttons wired up",
-      "Deployed live and handed over",
+      "Built and live in 5 business days",
     ],
   },
   care: {
@@ -180,6 +189,14 @@ export const pricing = {
   },
 } as const;
 
+/** The four numbers that matter, shown as a static band under the hero. */
+export const specs = [
+  { value: "R3,300", label: "Once-off, all in" },
+  { value: turnaround.label, label: "Build to live" },
+  { value: "21 days", label: "Free support after launch" },
+  { value: "R400 / mo", label: "Care plan, optional" },
+] as const;
+
 export const processSteps = [
   {
     n: "01",
@@ -189,7 +206,7 @@ export const processSteps = [
   {
     n: "02",
     title: "Build",
-    body: "I design and build the site custom to your business. You see it as it comes together and tell me what to change.",
+    body: "I design and build the site custom to your business — five business days from go-ahead, once I have your content. You see it as it comes together and tell me what to change.",
   },
   {
     n: "03",

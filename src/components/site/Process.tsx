@@ -45,7 +45,7 @@ export default function Process() {
   return (
     <section id="process" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
       <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(03)</span>
+        <span className="label !text-filament">(04)</span>
         <span className="label">How it runs</span>
       </div>
 
@@ -71,7 +71,7 @@ export default function Process() {
         >
           <div
             ref={chargeRef}
-            className="h-full w-full origin-top scale-y-0 [background:linear-gradient(to_bottom,var(--color-filament-hot),var(--color-filament),var(--color-filament-gold),var(--color-volt))]"
+            className="h-full w-full origin-top scale-y-0 [background:linear-gradient(to_bottom,var(--color-filament-hot),var(--color-filament),var(--color-filament-gold),var(--color-filament))]"
           />
         </div>
 
@@ -89,14 +89,14 @@ export default function Process() {
                   className={cn(
                     "absolute left-0 top-1 grid size-4 place-items-center rounded-full border transition-all duration-700 md:size-6",
                     live
-                      ? "border-volt bg-volt/15"
+                      ? "border-filament bg-filament/10"
                       : "border-hairline bg-ink",
                   )}
                 >
                   <span
                     className={cn(
                       "block rounded-full transition-all duration-700",
-                      live ? "size-1.5 bg-volt md:size-2" : "size-1 bg-ash-dim",
+                      live ? "size-1.5 bg-filament md:size-2" : "size-1 bg-ash-dim",
                     )}
                   />
                 </span>
@@ -105,7 +105,7 @@ export default function Process() {
                   <span
                     className={cn(
                       "font-mono text-[11px] tracking-[0.2em] transition-colors duration-700",
-                      live ? "text-volt" : "text-ash-dim",
+                      live ? "text-filament" : "text-ash-dim",
                     )}
                   >
                     {s.n}

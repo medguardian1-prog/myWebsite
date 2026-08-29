@@ -29,8 +29,7 @@ export default function FloatingWhatsApp() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`WhatsApp Vysan on ${contact.phoneDisplay}`}
-          data-cursor="link"
-          className="group fixed bottom-5 right-5 z-[90] flex items-center gap-3 rounded-full bg-volt py-3 pl-4 pr-5 text-ink shadow-[0_18px_50px_-16px_rgba(182,255,61,0.6)] md:bottom-7 md:right-7"
+          className="group fixed bottom-5 right-5 z-[90] flex items-center gap-3 rounded-full bg-wa py-3 pl-4 pr-5 text-ink shadow-[0_18px_50px_-18px_rgba(37,211,102,0.55)] md:bottom-7 md:right-7"
           initial={{ opacity: 0, y: 24, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 24, scale: 0.9 }}
@@ -38,10 +37,6 @@ export default function FloatingWhatsApp() {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
         >
-          <span
-            aria-hidden
-            className="absolute inset-0 rounded-full border border-volt animate-ring"
-          />
           <WhatsAppIcon className="relative size-5" />
           <span className="relative font-mono text-[11px] font-semibold uppercase tracking-[0.14em]">
             <span className="hidden sm:inline">Message </span>Vysan

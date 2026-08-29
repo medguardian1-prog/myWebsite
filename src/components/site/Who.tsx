@@ -16,14 +16,15 @@ const SPEC: readonly (readonly [string, string])[] = [
 ];
 
 /**
- * The human section. One person, named, with an actual phone number — which is
- * the whole differentiator against the agency this client's competitor used.
+ * The human section. One person, named, with a phone number that reaches him.
+ * That is the actual differentiator, so it gets stated plainly rather than
+ * dressed up as a team.
  */
 export default function Who() {
   return (
     <section id="who" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
       <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(04)</span>
+        <span className="label !text-filament">(05)</span>
         <span className="label">Who builds it</span>
       </div>
 
@@ -43,7 +44,7 @@ export default function Who() {
                   className="absolute inset-0"
                   style={{
                     backgroundImage:
-                      "radial-gradient(85% 60% at 50% 78%, rgba(255,122,26,0.30) 0%, rgba(255,61,0,0.10) 40%, rgba(8,7,11,0) 72%)",
+                      "radial-gradient(85% 60% at 50% 78%, rgba(255,122,26,0.26) 0%, rgba(232,72,10,0.09) 40%, rgba(8,7,11,0) 72%)",
                   }}
                 />
                 <div
@@ -62,7 +63,7 @@ export default function Who() {
                 </span>
                 <span
                   aria-hidden
-                  className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(182,255,61,0.10),transparent)]"
+                  className="absolute inset-x-0 top-0 h-24 bg-[linear-gradient(to_bottom,rgba(255,122,26,0.10),transparent)]"
                 />
                 <span className="label absolute bottom-4 left-5 !text-[9px]">
                   Operator
@@ -78,8 +79,8 @@ export default function Who() {
                 ))}
                 <div className="flex items-center gap-4 px-5 py-3.5">
                   <dt className="label w-[5.5rem] shrink-0 !text-[9px]">Status</dt>
-                  <dd className="flex items-center gap-2 text-[13.5px] text-volt">
-                    <span className="size-1.5 rounded-full bg-volt animate-live" />
+                  <dd className="flex items-center gap-2 text-[13.5px] text-filament">
+                    <span className="size-1.5 rounded-full bg-filament " />
                     Taking on work
                   </dd>
                 </div>
@@ -128,19 +129,21 @@ export default function Who() {
             </FadeUp>
             <FadeUp delay={0.14}>
               <p>
-                I started this because of what I kept seeing around Durban: solid
-                businesses — guesthouses, builders, studios, daycares — losing work
-                to competitors who had nothing on them except a website. Most of
-                them had been quoted twenty or thirty thousand rand for it, or
-                handed a template that broke on a phone.
+                I started this because of what I keep seeing around Durban: good
+                businesses that are effectively invisible the moment someone looks
+                them up. A guesthouse with no rates online. A builder whose only
+                page is a Facebook profile that stopped in 2023. The work is fine.
+                The finding is the problem.
               </p>
             </FadeUp>
             <FadeUp delay={0.18}>
               <p>
                 So the price is{" "}
                 <span className="text-bone">R3,300 and it&rsquo;s written on this page</span>
-                . The work is custom every time. And the reason I can move fast is
-                that it&rsquo;s just me: you send a voice note, I change it that
+                , the build takes{" "}
+                <span className="text-bone">five business days</span>, and the work
+                is custom every time. The reason I can move that fast is that
+                it&rsquo;s just me: you send a voice note, I change it that
                 afternoon.
               </p>
             </FadeUp>
@@ -148,8 +151,8 @@ export default function Who() {
 
           <FadeUp delay={0.22}>
             <blockquote className="mt-12 border-l border-filament/50 pl-6 font-display text-[clamp(1.5rem,3.2vw,2.4rem)] leading-[1.15] tracking-[-0.02em] text-bone">
-              &ldquo;Every site on this page belongs to someone who nearly
-              didn&rsquo;t bother.&rdquo;
+              I&rsquo;d rather show you five builds you can open than talk about
+              ten you can&rsquo;t.
             </blockquote>
           </FadeUp>
 

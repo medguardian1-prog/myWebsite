@@ -191,37 +191,44 @@ body {
 
 /* ------------------------------------------------------------------ *
  * Logotype switch-on
- * A filament coming up to temperature: dark, a couple of flickers as the
- * current catches, then a settle to bone. Colours are hard-coded through the
- * ember ramp because the point is the heat, not the theme.
+ * A filament coming up to temperature: a cold pre-flash as the current
+ * arrives, two flickers while it catches, then a settle to bone. Colours are
+ * hard-coded through the ember ramp because the point is the heat.
  * ------------------------------------------------------------------ */
 @keyframes mark-heat {
   0% {
     opacity: 0;
-    stroke: #3a2214;
+    stroke: #2a170d;
     filter: none;
   }
-  14% {
-    opacity: 0.7;
-    stroke: #e8480a;
+  8% {
+    /* Pre-flash: the circuit connects before the letter really lights. */
+    opacity: 0.34;
+    stroke: #b8390a;
   }
-  24% {
-    opacity: 0.22;
-    stroke: #7a2f0c;
+  16% {
+    opacity: 0.1;
+    stroke: #4a1f0a;
   }
-  40% {
-    opacity: 0.95;
-    stroke: #ff7a1a;
-    filter: drop-shadow(0 0 10px rgba(255, 122, 26, 0.55));
+  30% {
+    opacity: 0.88;
+    stroke: #ff6a12;
+    filter: drop-shadow(0 0 14px rgba(255, 106, 18, 0.6));
   }
-  52% {
-    opacity: 0.62;
-    stroke: #c2560f;
+  42% {
+    opacity: 0.5;
+    stroke: #b8480d;
+    filter: drop-shadow(0 0 6px rgba(255, 106, 18, 0.28));
   }
-  74% {
+  60% {
     opacity: 1;
-    stroke: #ffc978;
-    filter: drop-shadow(0 0 7px rgba(255, 201, 120, 0.35));
+    stroke: #ff9c3c;
+    filter: drop-shadow(0 0 16px rgba(255, 156, 60, 0.5));
+  }
+  80% {
+    opacity: 1;
+    stroke: #ffd9a4;
+    filter: drop-shadow(0 0 9px rgba(255, 217, 164, 0.3));
   }
   100% {
     opacity: 1;
@@ -231,31 +238,41 @@ body {
 }
 .mark-letter {
   opacity: 0;
-  animation: mark-heat 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: mark-heat 1.35s cubic-bezier(0.33, 1, 0.5, 1) both;
 }
 
+/* The wire itself runs hot, blooms, then cools back to its resting colour. */
 @keyframes mark-surge {
-  from {
+  0% {
     stroke-dashoffset: 1;
+    filter: drop-shadow(0 0 16px rgba(255, 122, 26, 0.9));
   }
-  to {
+  70% {
+    filter: drop-shadow(0 0 22px rgba(255, 200, 120, 0.75));
+  }
+  100% {
     stroke-dashoffset: 0;
+    filter: none;
   }
 }
 .mark-surge {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: mark-surge 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
+  animation: mark-surge 0.62s cubic-bezier(0.16, 1, 0.3, 1) 0.06s both;
 }
 
+/* Terminals arrive with a small overshoot, like a contact seating. */
 @keyframes mark-node {
   0% {
     opacity: 0;
-    transform: scale(0.2);
+    transform: scale(0.1);
   }
-  55% {
+  50% {
     opacity: 1;
-    transform: scale(1.5);
+    transform: scale(1.65);
+  }
+  75% {
+    transform: scale(0.9);
   }
   100% {
     opacity: 1;
@@ -266,9 +283,8 @@ body {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: mark-node 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: mark-node 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
 
 @keyframes filament-shift {
   0%,

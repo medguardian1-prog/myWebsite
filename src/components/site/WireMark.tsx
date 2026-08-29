@@ -72,8 +72,8 @@ export default function WireMark({
   /** Run the switch-on sequence (hero only). */
   power?: boolean;
 }) {
-  const SURGE = 0.5; // wire lights over this long
-  const LETTER_START = 0.34; // first letter catches before the surge finishes
+  const SURGE = 0.62; // wire lights over this long
+  const LETTER_START = 0.30; // first letter catches before the surge finishes
 
   return (
     <svg
@@ -94,7 +94,7 @@ export default function WireMark({
             className={power ? "mark-letter" : undefined}
             style={
               power
-                ? { animationDelay: `${LETTER_START + HOPS[i] * 0.085}s` }
+                ? { animationDelay: `${LETTER_START + HOPS[i] * 0.105}s` }
                 : undefined
             }
           />

@@ -7,32 +7,61 @@ import {
 } from "./WireMark";
 
 /**
- * The footer's version of the mark: the same letterforms, thrown up as a tag.
+ * The footer's mark: the logotype thrown up as a piece.
  *
- * Three moves turn the precise logotype into street lettering without changing
- * a single coordinate — so it still reads as the same brand rather than a
- * second, unrelated logo:
+ * Built the way a throw-up actually is, back to front — a hard offset drop
+ * shadow, a keyline, then the letter interiors knocked back to the wall
+ * colour. Mitre joins and square caps keep the limbs chunky and angular;
+ * rounded joins are what make this kind of lettering read as balloons instead
+ * of paint, which is exactly what the first attempt got wrong.
  *
- *  1. Fat strokes knocked out by a slightly thinner stroke in the background
- *     colour, which leaves a hairline outline around every limb. That's the
- *     "blockbuster outline" of a throw-up, and at this weight it reads
- *     expensive rather than childish.
- *  2. A turbulence displacement filter, which gives the vector edges a real
- *     hand-drawn wobble — the difference between a font and a marker.
- *  3. A slant, because nobody tags upright.
+ * A turbulence displacement filter roughens the edges so the vectors carry a
+ * hand quality, and the whole piece leans, because nothing worth looking at is
+ * painted upright.
  *
- * It sits behind the footer content, oversized and bleeding off both edges,
- * as a wall the page ends on.
+ * It shares WireMark's geometry rather than inventing a second alphabet, so
+ * the tag and the logotype are recognisably the same word.
  */
 
-const OUTER = 29; // fat stroke — becomes the outline
-const INNER = 22; // knockout — leaves (OUTER - INNER) / 2 of visible edge
-const SLANT = -9;
+const FILL = 34; // limb weight
+const KEYLINE = FILL + 7; // outline sits proud of the fill
+const DROP_X = 13;
+const DROP_Y = 15;
+const SLANT = -12;
+
+const BAR = `M${MARK_BAR_X1},0 H${MARK_BAR_X2}`;
+const ALL = [...MARK_LETTERS, BAR];
+
+/** One pass over every limb of the word, at a given weight and colour. */
+function Pass({
+  width,
+  stroke,
+  opacity,
+}: {
+  width: number;
+  stroke: string;
+  opacity?: number;
+}) {
+  return (
+    <g
+      stroke={stroke}
+      strokeWidth={width}
+      strokeLinecap="square"
+      strokeLinejoin="miter"
+      strokeMiterlimit={4}
+      opacity={opacity}
+    >
+      {ALL.map((d, i) => (
+        <path key={i} d={d} />
+      ))}
+    </g>
+  );
+}
 
 export default function TagMark({ className }: { className?: string }) {
   return (
     <svg
-      viewBox="-46 -34 992 190"
+      viewBox="-66 -36 1034 220"
       className={cn("block", className)}
       role="img"
       aria-label="HOTTWIREE"
@@ -42,72 +71,65 @@ export default function TagMark({ className }: { className?: string }) {
 
       <defs>
         {/*
-          Low-frequency fractal noise pushed through a displacement map. Scale
-          is the whole trick: much under 6 and it looks like a rendering fault,
-          much over 12 and the letters stop being readable.
+          Low-frequency fractal noise through a displacement map. Scale is the
+          whole trick: much under 5 and it looks like a rendering fault, much
+          over 10 and the letters stop being readable at this weight.
         */}
         <filter
           id="tag-rough"
-          x="-12%"
-          y="-30%"
-          width="124%"
-          height="160%"
+          x="-10%"
+          y="-25%"
+          width="120%"
+          height="150%"
           filterUnits="objectBoundingBox"
         >
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="0.011 0.019"
+            baseFrequency="0.009 0.016"
             numOctaves={3}
-            seed={11}
+            seed={17}
             result="noise"
           />
           <feDisplacementMap
             in="SourceGraphic"
             in2="noise"
-            scale={9}
+            scale={7}
             xChannelSelector="R"
             yChannelSelector="G"
           />
         </filter>
       </defs>
 
-      <g filter="url(#tag-rough)" transform={`translate(6,0) skewX(${SLANT})`}>
-        {/* Outline pass */}
-        <g
-          stroke="currentColor"
-          strokeWidth={OUTER}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {MARK_LETTERS.map((d, i) => (
-            <path key={`o${i}`} d={d} />
-          ))}
-          <path d={`M${MARK_BAR_X1},0 H${MARK_BAR_X2}`} />
+      <g filter="url(#tag-rough)" transform={`translate(10,0) skewX(${SLANT})`}>
+        {/* 1. The drop. Warm rather than black, so it reads against the ink. */}
+        <g transform={`translate(${DROP_X},${DROP_Y})`}>
+          <Pass width={KEYLINE} stroke="#2b1509" />
         </g>
 
-        {/* Knockout pass — paints the page colour back over the middle. */}
-        <g
-          stroke="var(--color-ink)"
-          strokeWidth={INNER}
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          {MARK_LETTERS.map((d, i) => (
-            <path key={`k${i}`} d={d} />
-          ))}
-          <path d={`M${MARK_BAR_X1},0 H${MARK_BAR_X2}`} />
-        </g>
+        {/* 2. Keyline. */}
+        <Pass width={KEYLINE} stroke="currentColor" />
 
-        {/* The wire keeps its heat, so the brand's tell survives the treatment. */}
-        <g className="text-filament/50">
+        {/* 3. Interiors knocked back to the wall, leaving the outline. */}
+        <Pass width={FILL} stroke="var(--color-ink)" />
+
+        {/* 4. The wire still runs hot through it — the brand's tell survives. */}
+        <g>
           <path
-            d={`M${MARK_BAR_X1},0 H${MARK_BAR_X2}`}
-            stroke="currentColor"
-            strokeWidth={5}
-            strokeLinecap="round"
+            d={BAR}
+            stroke="var(--color-filament)"
+            strokeWidth={9}
+            strokeLinecap="square"
+            opacity={0.75}
           />
           {MARK_NODES.map((n) => (
-            <circle key={n.x} cx={n.x} cy={0} r={n.r * 0.55} fill="currentColor" />
+            <circle
+              key={n.x}
+              cx={n.x}
+              cy={0}
+              r={n.r * 0.7}
+              fill="var(--color-filament)"
+              opacity={0.75}
+            />
           ))}
         </g>
       </g>

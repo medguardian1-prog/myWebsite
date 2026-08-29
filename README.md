@@ -162,11 +162,13 @@ outward through the word. See `HOPS` in `WireMark.tsx` if you reorder letters.
 ### On the footer tag
 
 The footer runs the same letterforms as a throw-up (`TagMark.tsx`) — no new
-geometry, so it still reads as one brand. Fat strokes are knocked out by a
-thinner stroke in the page colour, which leaves a hairline outline around every
-limb; a turbulence displacement filter gives the vector edges a hand-drawn
-wobble; and the whole thing is slanted. The hot wire keeps its colour so the
-double-T tell survives the treatment.
+geometry, so it still reads as one brand. It is built the way a throw-up
+actually is, back to front: a hard offset drop shadow in warm brown, a
+keyline, then the letter interiors knocked back to the wall colour. Mitre
+joins and square caps keep the limbs chunky; rounded joins are what made an
+earlier attempt read as balloons rather than paint. A turbulence displacement
+filter roughens the edges, and the piece leans 12°. The hot wire still runs
+through the double T.
 
 ### On the photograph
 

@@ -134,40 +134,97 @@ export default function Nav() {
         </nav>
       </header>
 
-      {/* ---- mobile overlay ---- */}
+      {/*
+        Mobile overlay — opens like a circuit closing rather than a panel
+        sliding. A wire runs down the left edge and each row lights as the
+        current reaches it: same idea as the logotype's switch-on, so the
+        navigation belongs to the brand instead of being generic chrome.
+      */}
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[95] flex flex-col justify-end bg-ink px-[var(--gutter)] pb-[var(--gutter)] pt-24 lg:hidden"
+            className="fixed inset-0 z-[95] flex flex-col justify-end overflow-hidden bg-ink px-[var(--gutter)] pb-[var(--gutter)] pt-24 lg:hidden"
             initial={{ clipPath: "inset(0 0 100% 0)" }}
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
-            transition={{ duration: 0.7, ease: EASE_WIPE }}
+            transition={{ duration: 0.62, ease: EASE_WIPE }}
           >
-            <ul className="flex flex-col">
-              {navLinks.map((l, i) => (
-                <li key={l.href} className="overflow-hidden border-b border-hairline">
-                  <motion.a
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="flex items-baseline justify-between py-5"
-                    initial={{ y: "110%" }}
-                    animate={{ y: 0 }}
-                    exit={{ y: "110%" }}
-                    transition={{ duration: 0.8, delay: 0.12 + i * 0.06, ease: EASE }}
-                  >
-                    <span className="font-display text-[clamp(2.2rem,10vw,3.4rem)] leading-none tracking-[-0.02em] text-bone">
-                      {l.label}
-                    </span>
-                    <span className="font-mono text-[10px] tracking-[0.2em] text-ash-dim">
-                      0{i + 1}
-                    </span>
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
+            {/* Ambient heat, so the panel isn't a flat black rectangle. */}
+            <motion.div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+              style={{
+                backgroundImage:
+                  "radial-gradient(70% 45% at 8% 78%, rgba(255,122,26,0.16) 0%, rgba(8,7,11,0) 70%)",
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+            />
 
-            <div className="mt-10 flex flex-col gap-3">
+            <nav className="relative">
+              {/* The wire: draws down past the rows as they light. */}
+              <motion.span
+                aria-hidden
+                className="absolute bottom-0 left-0 top-0 w-px origin-top bg-[linear-gradient(to_bottom,var(--color-filament-hot),var(--color-filament),var(--color-filament-gold))]"
+                initial={{ scaleY: 0 }}
+                animate={{ scaleY: 1 }}
+                exit={{ scaleY: 0, transition: { duration: 0.25 } }}
+                transition={{ duration: 0.62, delay: 0.16, ease: EASE }}
+              />
+
+              <ul className="flex flex-col">
+                {navLinks.map((l, i) => (
+                  <li key={l.href} className="border-b border-hairline">
+                    <motion.a
+                      href={l.href}
+                      onClick={() => setOpen(false)}
+                      className="relative flex items-center justify-between py-5 pl-6"
+                      initial={{ opacity: 0, x: -18 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -12, transition: { duration: 0.18 } }}
+                      transition={{
+                        duration: 0.55,
+                        // Timed to the wire so each row catches as it passes.
+                        delay: 0.22 + i * 0.075,
+                        ease: EASE,
+                      }}
+                    >
+                      <span className="flex items-baseline gap-4">
+                        {/* Node on the wire for this row. */}
+                        <motion.span
+                          aria-hidden
+                          className="absolute left-0 size-1.5 -translate-x-[3px] rounded-full bg-filament"
+                          initial={{ scale: 0, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0, opacity: 0 }}
+                          transition={{
+                            duration: 0.3,
+                            delay: 0.24 + i * 0.075,
+                            ease: EASE,
+                          }}
+                        />
+                        <span className="font-display text-[clamp(2.2rem,10vw,3.4rem)] leading-none tracking-[-0.02em] text-bone">
+                          {l.label}
+                        </span>
+                      </span>
+                      <span className="font-mono text-[10px] tracking-[0.2em] text-ash-dim">
+                        0{i + 1}
+                      </span>
+                    </motion.a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <motion.div
+              className="relative mt-10 flex flex-col gap-3"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10, transition: { duration: 0.18 } }}
+              transition={{ duration: 0.6, delay: 0.22 + navLinks.length * 0.075, ease: EASE }}
+            >
               <Button asChild variant="wa" size="lg" shape="pill" className="w-full">
                 <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer">
                   <WhatsAppIcon className="size-4" />
@@ -177,7 +234,7 @@ export default function Nav() {
               <Button asChild variant="wire" size="lg" shape="pill" className="w-full">
                 <a href={contact.mailto}>Email instead</a>
               </Button>
-            </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

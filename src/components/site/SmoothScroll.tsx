@@ -21,11 +21,17 @@ export default function SmoothScroll() {
     }
 
     const lenis = new Lenis({
-      duration: 1.05,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      wheelMultiplier: 1,
-      touchMultiplier: 1.6,
-      lerp: undefined,
+      // lerp rather than duration: a fixed easing curve restarts on every wheel
+      // tick, which is what makes smooth-scroll libraries feel rubbery. A
+      // frame-rate-independent lerp just keeps chasing the target, so
+      // continuous scrolling stays continuous.
+      lerp: 0.085,
+      wheelMultiplier: 0.92,
+      // Never intercept touch. Native momentum on iOS and Android is better
+      // than anything reimplemented in JS, and hijacking it is the single
+      // biggest cause of "this site scrolls badly on my phone".
+      syncTouch: false,
+      touchMultiplier: 1,
     });
 
     lenis.on("scroll", ScrollTrigger.update);

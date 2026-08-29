@@ -4,8 +4,10 @@ Marketing and portfolio site for **HOTTWIREE** — freelance web development by
 Vysan Chellan, Durban, KwaZulu-Natal.
 
 > The name is spelled with a **double T**. That's the brand mark, not a typo, and
-> the site leans into it: the `TT` is the only part of the wordmark that carries
-> the filament gradient, everywhere it appears.
+> the logotype makes it literal: the mark is drawn in SVG as bent-wire lettering
+> (`src/components/site/WireMark.tsx`), and the two T crossbars are a single hot
+> wire strung between two terminals. It isn't a font — change the lettering by
+> editing the paths in that file.
 
 ---
 
@@ -127,6 +129,8 @@ business, real or invented, in a losing position.
   scroll position share one clock
 - **Framer Motion** — entrances, the mobile menu, the search-proof toggle
 - **Raw WebGL2** for the hero's filament field; **canvas 2D** for the cursor trail
+- **Hand-drawn SVG logotype** (`WireMark`) — monoline strokes with square caps;
+  draw-on animation in the hero, static in the nav and footer
 
 ### On the hero shader
 
@@ -139,6 +143,14 @@ resolution (the field is all soft glow, so the upscale is invisible), pauses whe
 off-screen or when the tab is hidden, and doesn't run at all under reduced
 motion. If WebGL is unavailable the static gradient underneath carries the
 design.
+
+### On the nav
+
+The nav is a title block, not a floating pill: a full-width strip divided into
+cells by hairlines — mark / numbered sections / Durban wall-clock / the phone
+number. The number sits where a "get started" button usually goes because the
+number is the offer, and a visitor who only reads the top of the page still
+leaves with it.
 
 ### On the cursor
 

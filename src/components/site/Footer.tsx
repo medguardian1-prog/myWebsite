@@ -1,7 +1,7 @@
 "use client";
 
 import { contact, navLinks, owner, site } from "@/lib/site";
-import Wordmark from "./Wordmark";
+import WireMark from "./WireMark";
 import { InstagramIcon, WhatsAppIcon, MailIcon } from "./Icons";
 
 export default function Footer() {
@@ -87,7 +87,10 @@ export default function Footer() {
         aria-hidden
         className="select-none overflow-hidden px-[var(--gutter)]"
       >
-        <Wordmark className="block whitespace-nowrap font-display text-[20vw] leading-[0.72] tracking-[-0.05em] text-ink-3 [-webkit-text-stroke:1px_var(--color-hairline)]" />
+        <WireMark
+          className="h-auto w-full text-hairline"
+          hotClassName="text-filament/35"
+        />
       </div>
 
       <div className="flex flex-col gap-2 border-t border-hairline px-[var(--gutter)] py-5 text-[11px] text-ash-dim sm:flex-row sm:items-center sm:justify-between">

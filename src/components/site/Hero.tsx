@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { EASE } from "@/lib/motion";
 import { contact, owner } from "@/lib/site";
@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowDownIcon, WhatsAppIcon } from "./Icons";
 import FilamentField from "./FilamentField";
 import Magnetic from "./Magnetic";
-import Wordmark from "./Wordmark";
+import WireMark from "./WireMark";
 
 const RISE: Variants = {
   hidden: { y: "115%" },
@@ -20,48 +20,15 @@ const RISE: Variants = {
 
 export default function Hero() {
   const [ready, setReady] = useState(false);
-  const markRef = useRef<HTMLDivElement>(null);
 
-  // Play the entrance on mount. There is no preloader to wait behind any
-  // more — a percentage counter in front of a sales page costs more than the
-  // drama is worth.
   useEffect(() => setReady(true), []);
-
-  // Pointer position feeds a mask that reveals a hotter copy of the wordmark
-  // only where the cursor is — written straight to CSS vars, never to state.
-  useEffect(() => {
-    const el = markRef.current;
-    if (!el) return;
-    if (window.matchMedia("(pointer: coarse)").matches) return;
-
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      if (raf) return;
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const r = el.getBoundingClientRect();
-        el.style.setProperty("--spot-x", `${e.clientX - r.left}px`);
-        el.style.setProperty("--spot-y", `${e.clientY - r.top}px`);
-        el.style.setProperty("--spot-o", "1");
-      });
-    };
-    const onLeave = () => el.style.setProperty("--spot-o", "0");
-
-    window.addEventListener("pointermove", onMove, { passive: true });
-    document.addEventListener("pointerleave", onLeave);
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", onMove);
-      document.removeEventListener("pointerleave", onLeave);
-    };
-  }, []);
 
   const animate = ready ? "show" : "hidden";
 
   return (
     <section
       id="top"
-      className="relative flex min-h-[100svh] flex-col justify-between gap-8 overflow-hidden pb-6 pt-28 md:pt-32"
+      className="relative flex min-h-[100svh] flex-col justify-between gap-8 overflow-hidden pb-6 pt-24 md:pt-28"
     >
       {/* Static heat under the canvas — this is what shows if WebGL is off. */}
       <div
@@ -69,7 +36,7 @@ export default function Hero() {
         className="absolute inset-0 bg-ink"
         style={{
           backgroundImage:
-            "radial-gradient(80% 55% at 72% 38%, rgba(255,122,26,0.20) 0%, rgba(255,61,0,0.07) 38%, rgba(8,7,11,0) 72%)",
+            "radial-gradient(80% 55% at 72% 38%, rgba(255,122,26,0.20) 0%, rgba(232,72,10,0.07) 38%, rgba(8,7,11,0) 72%)",
         }}
       />
       <FilamentField energy={0.75} />
@@ -86,7 +53,7 @@ export default function Hero() {
           animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.5 }}
         >
-          <span className="size-1.5 rounded-full bg-filament " />
+          <span className="size-1.5 rounded-full bg-filament" />
           <span className="label !text-bone">Taking on work</span>
         </motion.div>
 
@@ -170,49 +137,16 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* ---- the mark, full bleed along the floor ---- */}
+      {/* ---- the mark, bent into place along the floor ---- */}
       <div className="relative z-10 mt-16 md:mt-0">
-        <div
-          ref={markRef}
-          className="relative px-[var(--gutter)]"
-          style={
-            {
-              "--spot-x": "50%",
-              "--spot-y": "50%",
-              "--spot-o": "0",
-            } as React.CSSProperties
-          }
-        >
-          <div className="line-mask">
-            <motion.div variants={RISE} custom={2} initial="hidden" animate={animate}>
-              <Wordmark
-                className="block whitespace-nowrap font-display text-[23.4vw] leading-[0.78] tracking-[-0.045em] text-bone"
-              />
-            </motion.div>
-          </div>
-
-          {/* Hotter twin, revealed only under the pointer. */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 hidden px-[var(--gutter)] transition-opacity duration-500 [@media(pointer:fine)]:block"
-            style={{
-              opacity: "var(--spot-o)",
-              WebkitMaskImage:
-                "radial-gradient(240px 240px at var(--spot-x) var(--spot-y), #000 0%, rgba(0,0,0,0.55) 45%, transparent 72%)",
-              maskImage:
-                "radial-gradient(240px 240px at var(--spot-x) var(--spot-y), #000 0%, rgba(0,0,0,0.55) 45%, transparent 72%)",
-            }}
-          >
-            <Wordmark
-              className="block whitespace-nowrap font-display text-[23.4vw] leading-[0.78] tracking-[-0.045em] filament-text animate-filament"
-              ttClassName="!text-transparent"
-            />
-          </div>
+        <div className="px-[var(--gutter)]">
+          {/* Mounted only once `ready` so the draw-on stagger plays in view. */}
+          {ready && <WireMark draw className="h-auto w-full text-bone" />}
         </div>
 
         {/* ---- floor strip ---- */}
         <motion.div
-          className="mt-5 flex items-center justify-between gap-4 border-t border-hairline px-[var(--gutter)] pt-4"
+          className="mt-6 flex items-center justify-between gap-4 border-t border-hairline px-[var(--gutter)] pt-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.9 }}
@@ -225,8 +159,7 @@ export default function Hero() {
           </a>
           <p className="label text-right !text-ash-dim">
             <span className="text-filament">R3,300</span> flat
-            <span className="mx-2 opacity-40">/</span>
-            5 business days
+            <span className="mx-2 opacity-40">/</span>5 business days
           </p>
         </motion.div>
       </div>

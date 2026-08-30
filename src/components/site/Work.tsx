@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { contact, projects } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { SplitWords, FadeUp } from "./TextReveal";
@@ -22,47 +20,71 @@ export default function Work() {
   const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const mm = gsap.matchMedia();
-
-    mm.add(
+    // Only the pinned gallery needs GSAP, and the gallery only exists on wide
+    // pointer screens — so the library is fetched lazily and phones never pay
+    // for it at all.
+    const wide = window.matchMedia(
       "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
-      () => {
-        const track = trackRef.current;
-        const wrap = wrapRef.current;
-        if (!track || !wrap) return;
-
-        const distance = () =>
-          Math.max(0, track.scrollWidth - window.innerWidth + 64);
-
-        const tween = gsap.to(track, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: wrap,
-            start: "top top",
-            end: () => `+=${distance()}`,
-            pin: true,
-            scrub: 0.7,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            onUpdate: (self) => {
-              if (barRef.current) {
-                barRef.current.style.transform = `scaleX(${self.progress})`;
-              }
-            },
-          },
-        });
-
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-          gsap.set(track, { x: 0 });
-        };
-      },
     );
+    if (!wide.matches) return;
 
-    return () => mm.revert();
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+
+    void (async () => {
+      const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+      ]);
+      if (cancelled) return;
+
+      gsap.registerPlugin(ScrollTrigger);
+      const mm = gsap.matchMedia();
+
+      mm.add(
+        "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const track = trackRef.current;
+          const wrap = wrapRef.current;
+          if (!track || !wrap) return;
+
+          const distance = () =>
+            Math.max(0, track.scrollWidth - window.innerWidth + 64);
+
+          const tween = gsap.to(track, {
+            x: () => -distance(),
+            ease: "none",
+            scrollTrigger: {
+              trigger: wrap,
+              start: "top top",
+              end: () => `+=${distance()}`,
+              pin: true,
+              scrub: 0.7,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+              onUpdate: (self) => {
+                if (barRef.current) {
+                  barRef.current.style.transform = `scaleX(${self.progress})`;
+                }
+              },
+            },
+          });
+
+          return () => {
+            tween.scrollTrigger?.kill();
+            tween.kill();
+            gsap.set(track, { x: 0 });
+          };
+        },
+      );
+
+      cleanup = () => mm.revert();
+    })();
+
+    return () => {
+      cancelled = true;
+      cleanup?.();
+    };
   }, []);
 
   return (

@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Instrument_Serif, Inter, JetBrains_Mono } from "next/font/google";
-import { site, contact, owner } from "@/lib/site";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import Telemetry from "@/components/site/Telemetry";
+import { site, contact, owner, faqs, pricing, turnaround } from "@/lib/site";
 import "./globals.css";
 
 const display = Instrument_Serif({
@@ -54,6 +57,7 @@ export const metadata: Metadata = {
     description: site.description,
   },
   robots: { index: true, follow: true },
+  alternates: { canonical: "/" },
 };
 
 export const viewport: Viewport = {
@@ -77,20 +81,39 @@ const jsonLd = {
     addressRegion: "KwaZulu-Natal",
     addressCountry: "ZA",
   },
+  priceRange: "R3,300",
+  knowsAbout: [
+    "Web design",
+    "Web development",
+    "Small business websites",
+    "Landing pages",
+  ],
   makesOffer: [
     {
       "@type": "Offer",
-      name: "Standard Landing Page Site",
+      name: pricing.standard.label,
+      description: `${pricing.standard.summary} Delivered in ${turnaround.label}.`,
       price: "3300",
       priceCurrency: "ZAR",
     },
     {
       "@type": "Offer",
-      name: "Care Plan",
+      name: pricing.care.label,
+      description: pricing.care.summary,
       price: "400",
       priceCurrency: "ZAR",
     },
   ],
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 export default function RootLayout({
@@ -103,7 +126,14 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+        />
         {children}
+        <Telemetry />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -40,9 +40,18 @@ Google reads.
 | Your bio and study details | `src/lib/site.ts` → `owner` |
 | Tagline (4 options written, 1 in use) | `src/lib/site.ts` → `site.tagline` |
 | Colours, fonts, motion curves | `src/app/globals.css` → the `@theme` block |
+| FAQ answers (also feeds Google rich results) | `src/lib/site.ts` → `faqs` |
+| Client testimonials | `src/lib/site.ts` → `testimonials` |
 | Section order | `src/app/page.tsx` |
 
 ### Things marked TODO for you
+
+- **Payment terms are not on the site.** The FAQ deliberately has no deposit or
+  invoicing answer, because inventing one is worse than omitting it. Add an
+  entry to `faqs` in `src/lib/site.ts` once you have decided.
+- **Set `NEXT_PUBLIC_SITE_URL` in Vercel** the moment the real domain is
+  connected. The canonical tag, Open Graph image, sitemap, robots.txt and
+  structured data all read from it.
 
 - Each build's one-line description says what that build demonstrates. Every
   one is tagged `{/* TODO: Vysan confirm/replace this description */}` in
@@ -243,6 +252,36 @@ WhatsApp green (`#25d366`) appears **only** on WhatsApp affordances, so it
 reads as a platform signal rather than decoration. An earlier draft had an acid
 green as a second brand accent; two competing accents plus a four-stop gradient
 read as a template, so both were cut.
+
+---
+
+## Before you connect a domain
+
+Done in this repo:
+
+- Accessibility: zero axe violations (15 contrast failures fixed at the token
+  level — `ash-dim` was 3.5:1 against ink and needed 4.5:1).
+- Canonical URL, and a single `NEXT_PUBLIC_SITE_URL` that every piece of
+  metadata derives from.
+- Branded 404 with a way to just ask.
+- Vercel Analytics and Speed Insights, plus a delegated click tracker that
+  records every WhatsApp, email and demo-link press along with the section it
+  came from — so you learn *where* people convert, not just how many. Custom
+  events are subject to your Vercel plan's limits.
+- FAQ section with FAQPage structured data, which is how those answers can
+  appear as expandable results directly in Google.
+- GSAP no longer loads on phones at all; First Load JS went 237 kB → 194 kB.
+
+Still yours to do, off the site:
+
+1. **Buy `hottwiree.co.za`, not `.com`.** A `.co.za` outranks a `.com` for
+   South African local searches, and every buyer you have is local.
+2. **Create a Google Business Profile.** Free, and the single highest-leverage
+   thing available for ranking on "web developer Durban" — a one-page site
+   ranks for almost nothing on its own.
+3. **Get one real testimonial.** The `testimonials` array is wired and the
+   section renders nothing while it's empty. The day a paying client says
+   something good, one entry there is worth more than any design on this page.
 
 ---
 

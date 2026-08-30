@@ -16,7 +16,12 @@ export const site = {
   tagline: "Websites for businesses that can't be found.",
   description:
     "HOTTWIREE builds custom websites for South African businesses. R3,300 flat, live in 5 business days, 21 days free support on every build. Durban-based freelance developer Vysan Chellan.",
-  url: "https://hottwiree.vercel.app",
+  /**
+   * Set NEXT_PUBLIC_SITE_URL in Vercel once the real domain is connected.
+   * Everything downstream — canonical tag, Open Graph, sitemap, robots.txt
+   * and the structured data Google reads — follows from this one value.
+   */
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://hottwiree.vercel.app",
   locale: "Durban, KwaZulu-Natal · South Africa",
 } as const;
 
@@ -192,6 +197,66 @@ export const specs = [
   { value: "21 days", label: "Free support after launch" },
   { value: "R400 / mo", label: "Care plan, optional" },
 ] as const;
+
+export type Faq = { q: string; a: string };
+
+/**
+ * Objection handling. Also emitted as FAQPage structured data, which is how
+ * these can show up as expandable answers directly in Google results.
+ *
+ * TODO: Vysan — add a payment-terms entry (deposit up front? full on launch?).
+ * Deliberately left out rather than invented, because getting it wrong on the
+ * page is worse than not answering it.
+ */
+export const faqs: readonly Faq[] = [
+  {
+    q: "Do I own the site when it's done?",
+    a: "Yes. The code, the content and the domain are all in your name. Nothing is rented from me, and nothing stops working if we go our separate ways.",
+  },
+  {
+    q: "What does hosting cost?",
+    a: "The site is deployed to a hosting account in your name. For a site this size that runs on Vercel's free tier, so in practice it costs nothing per month. I set it up with you and hand over the login.",
+  },
+  {
+    q: "And the domain?",
+    a: "You buy that yourself — a .co.za is roughly R100 to R200 a year. I'll help you pick one and connect it. Buying it in your own name means it stays yours permanently, whoever builds your next site.",
+  },
+  {
+    q: "What if I don't like how it looks?",
+    a: "You'll see it as it comes together, not at the end. Changes during the build are part of the R3,300 — we keep going until it's right.",
+  },
+  {
+    q: "What happens after the 21 days of free support?",
+    a: "Nothing changes. Your site keeps running exactly as it is. After that you either take the R400/month Care Plan, or just message me when you need something and I'll quote it.",
+  },
+  {
+    q: "What do you need from me?",
+    a: "Your services and prices, your contact details, any photos you have, and a logo if you've got one. That's what keeps it to five business days — the clock starts when I have your content.",
+  },
+  {
+    q: "I already have a website.",
+    a: "Then send it to me and I'll tell you straight whether it needs rebuilding or just fixing. If it only needs fixing, I'll say so rather than sell you a rebuild.",
+  },
+];
+
+/**
+ * Real client testimonials only.
+ *
+ * The section renders nothing while this is empty, which is deliberate: the
+ * five builds on this site are demos, so there is no one to quote yet. The
+ * day a paying client says something good, put it here with their real name
+ * and business — that single entry will be worth more than any of the design
+ * on this page.
+ */
+export type Testimonial = {
+  quote: string;
+  name: string;
+  business: string;
+  /** Optional link to their live site. */
+  url?: string;
+};
+
+export const testimonials: readonly Testimonial[] = [];
 
 export const processSteps = [
   {

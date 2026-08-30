@@ -11,6 +11,8 @@ import Work from "@/components/site/Work";
 import Pricing from "@/components/site/Pricing";
 import Process from "@/components/site/Process";
 import Who from "@/components/site/Who";
+import Testimonials from "@/components/site/Testimonials";
+import Faq from "@/components/site/Faq";
 import Contact from "@/components/site/Contact";
 import Footer from "@/components/site/Footer";
 import FloatingWhatsApp from "@/components/site/FloatingWhatsApp";
@@ -24,6 +26,7 @@ import FloatingWhatsApp from "@/components/site/FloatingWhatsApp";
  *   Pricing     — here is exactly what it costs
  *   Process     — here is how little you have to do
  *   Who         — here is who you're dealing with
+ *   Faq         — here is every reason you were about to hesitate
  *   Contact     — here are two ways to start
  *
  * The price band sits second on purpose. Almost everyone arriving from a cold
@@ -47,6 +50,8 @@ export default function Page() {
         <Pricing />
         <Process />
         <Who />
+        <Testimonials />
+        <Faq />
         <Contact />
       </main>
 

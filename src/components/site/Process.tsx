@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { processSteps } from "@/lib/site";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { cn } from "@/lib/utils";
@@ -10,6 +8,11 @@ import { cn } from "@/lib/utils";
 /**
  * Four steps strung along a wire that charges as you scroll past it. The node
  * for each step goes live the moment the current reaches it.
+ *
+ * Deliberately no GSAP: this is one number derived from a bounding rect, and
+ * pulling ScrollTrigger in for it meant every phone downloaded the whole
+ * library for an effect that a rect and a transform do just as well. GSAP now
+ * loads only for the desktop pinned gallery.
  */
 export default function Process() {
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -17,29 +20,42 @@ export default function Process() {
   const [reached, setReached] = useState(0);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const st = ScrollTrigger.create({
-      trigger: wrap,
-      start: "top 78%",
-      end: "bottom 62%",
-      scrub: true,
-      onUpdate: (self) => {
-        if (chargeRef.current) {
-          chargeRef.current.style.transform = `scaleY(${self.progress})`;
-        }
-        // Light each node as the current passes it, not before.
-        const n = Math.min(
-          processSteps.length,
-          Math.floor(self.progress * processSteps.length + 0.35),
-        );
-        setReached((prev) => (prev === n ? prev : n));
-      },
-    });
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const r = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      // Starts charging when the block reaches 78% down the viewport and is
+      // full by the time its bottom passes 62% — same window as before.
+      const start = vh * 0.78;
+      const end = vh * 0.62 - r.height;
+      const p = Math.min(1, Math.max(0, (start - r.top) / Math.max(1, start - end)));
 
-    return () => st.kill();
+      if (chargeRef.current) {
+        chargeRef.current.style.transform = `scaleY(${p})`;
+      }
+      const n = Math.min(
+        processSteps.length,
+        Math.floor(p * processSteps.length + 0.35),
+      );
+      setReached((prev) => (prev === n ? prev : n));
+    };
+
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   return (

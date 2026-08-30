@@ -211,15 +211,15 @@ export type Faq = { q: string; a: string };
 export const faqs: readonly Faq[] = [
   {
     q: "Do I own the site when it's done?",
-    a: "Yes. The code, the content and the domain are all in your name. Nothing is rented from me, and nothing stops working if we go our separate ways.",
+    a: "Yes. The code and the content are yours — ask me for them at any time and I'll hand the whole project over. The domain is bought in your name from day one, so that stays yours permanently as well.",
   },
   {
     q: "What does hosting cost?",
-    a: "The site is deployed to a hosting account in your name. For a site this size that runs on Vercel's free tier, so in practice it costs nothing per month. I set it up with you and hand over the login.",
+    a: "Nothing. I host your site on my own Vercel account, so there is no hosting bill and nothing for you to set up or keep an eye on. If you ever want it moved onto your own account, I hand over the code and help you repoint the domain — nothing is held hostage.",
   },
   {
     q: "And the domain?",
-    a: "You buy that yourself — a .co.za is roughly R100 to R200 a year. I'll help you pick one and connect it. Buying it in your own name means it stays yours permanently, whoever builds your next site.",
+    a: "You buy that one yourself, in your own name — a .co.za is roughly R100 to R200 a year. I'll tell you exactly which to get and the two settings to change so I can connect it. Owning it yourself means it stays yours, whoever builds your next site.",
   },
   {
     q: "What if I don't like how it looks?",

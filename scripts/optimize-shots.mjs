@@ -1,12 +1,21 @@
-// Converts the raw demo screenshots into web-ready WebP + tiny blur placeholders.
-// Run with: node scripts/optimize-shots.mjs
+// Converts raw demo screenshots into web-ready WebP.
+// Drop new PNGs into public/work/ (named virelle, rjs, topnotch, junes,
+// zinnia) then run: node scripts/optimize-shots.mjs
+//
+// No blur placeholders to generate — the images are imported as modules in
+// src/lib/shots.ts, so Next produces the placeholder and, crucially, a
+// content-hashed URL. That hash is what stops the image optimiser serving a
+// stale copy of a screenshot you have just replaced.
 import sharp from "sharp";
-import { readdir, writeFile, unlink } from "node:fs/promises";
+import { readdir, unlink } from "node:fs/promises";
 import path from "node:path";
 
 const dir = path.join(process.cwd(), "public", "work");
 const files = (await readdir(dir)).filter((f) => f.endsWith(".png"));
-const blur = {};
+
+if (files.length === 0) {
+  console.log("No PNGs in public/work — nothing to do.");
+}
 
 for (const file of files) {
   const slug = path.basename(file, ".png");
@@ -17,12 +26,6 @@ for (const file of files) {
     .webp({ quality: 82, effort: 6 })
     .toFile(path.join(dir, `${slug}.webp`));
 
-  const tiny = await sharp(src).resize({ width: 20 }).blur(1.2).webp({ quality: 40 }).toBuffer();
-  blur[slug] = `data:image/webp;base64,${tiny.toString("base64")}`;
-
   await unlink(src);
   console.log("optimised", slug);
 }
-
-await writeFile(path.join(process.cwd(), "src", "lib", "blur.json"), JSON.stringify(blur, null, 2));
-console.log("wrote src/lib/blur.json");

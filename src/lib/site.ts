@@ -66,7 +66,6 @@ export type Project = {
   /** Two or three build highlights, shown as mono chips. */
   tags: readonly string[];
   url: string;
-  shot: string;
 };
 
 /**
@@ -81,13 +80,12 @@ export const projects: readonly Project[] = [
   {
     slug: "virelle",
     name: "Virelle",
-    sector: "Property · Listings",
+    sector: "Property · Private brokerage",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A listings build: filterable inventory, light and dark modes, and an enquiry path that survives a long browse.",
-    tags: ["Filterable listings", "Light / dark", "Enquiry flow"],
+      "A restraint build: a deliberately small portfolio presented like a private viewing, with a searchable register rather than a property portal.",
+    tags: ["Searchable register", "Editorial typography", "Discreet enquiry"],
     url: "https://sales-wb4k.vercel.app/",
-    shot: "/work/virelle.webp",
   },
   {
     slug: "rjs",
@@ -95,10 +93,9 @@ export const projects: readonly Project[] = [
     sector: "Hospitality · Bookings",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A booking build: rooms, amenities and reviews arranged to get someone from arriving to messaging in one tap.",
-    tags: ["WhatsApp bookings", "Gallery", "Reviews + map"],
+      "A conversion build: guests pick their dates and nights, see the real total, and get a WhatsApp message with those dates already written in it.",
+    tags: ["Stay planner", "Live pricing", "Pre-filled WhatsApp"],
     url: "https://rjs-guesthouse.vercel.app/",
-    shot: "/work/rjs.webp",
   },
   {
     slug: "topnotch",
@@ -106,21 +103,19 @@ export const projects: readonly Project[] = [
     sector: "Trades · Quotes",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A trades build: eight services laid out without clutter, priced packages, and a quote request that takes seconds.",
-    tags: ["Service grid", "Priced packages", "Quote funnel"],
+      "A spec-sheet build: eight trades set out like a job document, with a scope builder that turns a vague enquiry into a qualified one.",
+    tags: ["Scope builder", "Fixed package rates", "Job-sheet layout"],
     url: "https://top-notch-pi.vercel.app/",
-    shot: "/work/topnotch.webp",
   },
   {
     slug: "junes",
     name: "June's Studio",
-    sector: "Creative · Catalogue",
+    sector: "Creative · Gallery",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A catalogue build: individual items with prices and sold states, plus a commission enquiry for everything else.",
-    tags: ["Catalogue", "Sold states", "Commission form"],
+      "A materiality build: the work is chalk on black, so the cursor becomes a gallery light that rakes across each piece as you pass it.",
+    tags: ["Moving light source", "Hung-wall layout", "Commissions"],
     url: "https://junes-studio.vercel.app/",
-    shot: "/work/junes.webp",
   },
   {
     slug: "zinnia",
@@ -128,10 +123,9 @@ export const projects: readonly Project[] = [
     sector: "Childcare · Enquiries",
     // TODO: Vysan confirm/replace this description
     blurb:
-      "A trust build: warm, parent-facing, with the details a parent actually checks before booking a tour.",
-    tags: ["Programmes", "Trust cues", "Book-a-tour CTA"],
+      "A trust build: a scroll-through of one whole day, drop-off to pickup, answering the question every parent has before they will book a tour.",
+    tags: ["A day here", "Routine timeline", "Book-a-tour CTA"],
     url: "https://daycare-seven-ruby.vercel.app/",
-    shot: "/work/zinnia.webp",
   },
 ];
 

@@ -3,11 +3,9 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import type { Project } from "@/lib/site";
-import blur from "@/lib/blur.json";
+import { shots } from "@/lib/shots";
 import { ArrowOutIcon } from "./Icons";
 import { cn } from "@/lib/utils";
-
-const blurMap = blur as Record<string, string>;
 
 /**
  * One demonstration build.
@@ -110,12 +108,11 @@ export default function ProjectCard({
 
         <div ref={frameRef} className="relative aspect-[16/10] w-full overflow-hidden">
           <Image
-            src={project.shot}
+            src={shots[project.slug]}
             alt={`Screenshot of the ${project.name} demo build`}
             fill
             sizes="(min-width: 1024px) 60vw, 92vw"
-            placeholder={blurMap[project.slug] ? "blur" : "empty"}
-            blurDataURL={blurMap[project.slug]}
+            placeholder="blur"
             className={cn(
               "object-cover object-top transition-all duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
               "scale-[1.02] group-hover/card:scale-100",

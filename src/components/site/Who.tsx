@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import { owner, site, contact } from "@/lib/site";
-import blur from "@/lib/blur.json";
+import durban from "../../../public/durban.webp";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { Button } from "@/components/ui/button";
 import { PinIcon, WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
-
-const blurMap = blur as Record<string, string>;
 
 const SPEC: readonly (readonly [string, string])[] = [
   ["Name", owner.name],
@@ -45,12 +43,11 @@ export default function Who() {
               */}
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink-3">
                 <Image
-                  src="/durban.webp"
+                  src={durban}
                   alt="The arch of Moses Mabhida Stadium, Durban"
                   fill
                   sizes="(min-width: 1024px) 40vw, 92vw"
-                  placeholder={blurMap.durban ? "blur" : "empty"}
-                  blurDataURL={blurMap.durban}
+                  placeholder="blur"
                   className="object-cover"
                 />
                 {/* Drafting grid, so the plate reads as a document not a postcard. */}

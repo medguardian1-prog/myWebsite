@@ -21,6 +21,26 @@ import { cn } from "@/lib/utils";
 export default function Nav() {
   const [open, setOpen] = useState(false);
   const [time, setTime] = useState("");
+  const [current, setCurrent] = useState<string | null>(null);
+
+  // Scrollspy: whichever section is crossing the middle of the screen is the
+  // chapter you're in, and the nav says so.
+  useEffect(() => {
+    const els = navLinks
+      .map((l) => document.querySelector<HTMLElement>(l.href))
+      .filter((el): el is HTMLElement => !!el);
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setCurrent(`#${e.target.id}`);
+          else setCurrent((c) => (c === `#${e.target.id}` ? null : c));
+        }
+      },
+      { rootMargin: "-48% 0px -48% 0px" },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
   // Durban wall-clock. Signals a real person in a real timezone, and quietly
   // answers "will he even reply now?" before it's asked.
@@ -65,21 +85,42 @@ export default function Nav() {
 
           {/* ---- sections ---- */}
           <div className="hidden items-center gap-9 border-r border-hairline px-9 lg:flex">
-            {navLinks.map((l, i) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="group relative flex items-baseline gap-1.5 py-2"
-              >
-                <span className="font-mono text-[9px] text-ash-dim transition-colors duration-300 group-hover:text-filament">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="text-[13px] text-ash transition-colors duration-300 group-hover:text-bone">
-                  {l.label}
-                </span>
-                <span className="absolute -bottom-px left-0 h-px w-0 bg-filament transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
-              </a>
-            ))}
+            {navLinks.map((l, i) => {
+              const on = current === l.href;
+              return (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  aria-current={on ? "location" : undefined}
+                  className="group relative flex items-baseline gap-1.5 py-2"
+                >
+                  <span
+                    className={cn(
+                      "font-mono text-[9px] transition-colors duration-300 group-hover:text-filament",
+                      on ? "text-filament" : "text-ash-dim",
+                    )}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-[13px] transition-colors duration-300 group-hover:text-bone",
+                      on ? "text-bone" : "text-ash",
+                    )}
+                  >
+                    {l.label}
+                  </span>
+                  <span className="absolute -bottom-px left-0 h-px w-0 bg-filament/60 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:w-full" />
+                  {on && (
+                    <motion.span
+                      layoutId="nav-current"
+                      className="absolute -bottom-px left-0 h-px w-full [background:var(--filament-gradient)] shadow-[0_0_10px_rgba(255,122,26,0.8)]"
+                      transition={{ duration: 0.6, ease: EASE }}
+                    />
+                  )}
+                </a>
+              );
+            })}
           </div>
 
           <div className="flex-1" />

@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
 import { cn } from "@/lib/utils";
+import SectionLabel from "./SectionLabel";
 
 /**
  * Objection handling, on the page rather than waiting in a WhatsApp thread.
@@ -27,10 +28,7 @@ export default function Faq() {
       id="faq"
       className="relative bg-ink px-[var(--gutter)] py-24 md:py-36"
     >
-      <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(06)</span>
-        <span className="label">Before you ask</span>
-      </div>
+      <SectionLabel n="06">Before you ask</SectionLabel>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
         <SplitWords

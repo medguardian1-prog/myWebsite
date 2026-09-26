@@ -280,4 +280,5 @@ export const navLinks = [
   { label: "Pricing", href: "#pricing" },
   { label: "Process", href: "#process" },
   { label: "Who", href: "#who" },
+  { label: "FAQ", href: "#faq" },
 ] as const;

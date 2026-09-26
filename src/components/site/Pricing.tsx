@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { EASE } from "@/lib/motion";
 import { pricing, contact } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { SplitWords, FadeUp } from "./TextReveal";
 import Magnetic from "./Magnetic";
+import SectionLabel from "./SectionLabel";
 import {
   CareIcon,
   CustomIcon,
@@ -32,10 +35,7 @@ export default function Pricing() {
 
   return (
     <section id="pricing" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
-      <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(03)</span>
-        <span className="label">The price</span>
-      </div>
+      <SectionLabel n="03">The price</SectionLabel>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
         <SplitWords
@@ -126,12 +126,37 @@ export default function Pricing() {
               <div>
                 <p className="label">Your total</p>
                 <p className="mt-2 font-mono text-[clamp(1.1rem,2.2vw,1.5rem)] tabular-nums text-bone">
-                  R3,300{" "}
+                  {pricing.standard.priceLabel}{" "}
                   <span className="text-ash-dim">once-off</span>
-                  {care && (
-                    <span className="text-filament"> + R400 / month</span>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {care && (
+                      <motion.span
+                        className="inline-block text-filament"
+                        initial={{ opacity: 0, x: -10, filter: "blur(4px)" }}
+                        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+                        exit={{ opacity: 0, x: -6, filter: "blur(4px)" }}
+                        transition={{ duration: 0.5, ease: EASE }}
+                      >
+                        &nbsp;+ {pricing.care.priceLabel} / month
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
                 </p>
+                {/* The sum spelled out, so nobody has to do it in their head. */}
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.p
+                    key={care ? "care" : "base"}
+                    className="mt-2 text-[12.5px] text-ash-dim"
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                  >
+                    {care
+                      ? `First 12 months: R${(pricing.standard.price + pricing.care.price * 12).toLocaleString("en-US")} (${pricing.standard.priceLabel} + 12 × ${pricing.care.priceLabel}). Cancel the plan any month.`
+                      : "Nothing more to pay me once it’s live — only your own domain, roughly R100–R200 a year."}
+                  </motion.p>
+                </AnimatePresence>
               </div>
               <Magnetic strength={0.26} className="self-start sm:self-auto">
                 <Button asChild variant="filament" size="lg" shape="pill">

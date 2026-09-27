@@ -3,10 +3,12 @@ import SmoothScroll from "@/components/site/SmoothScroll";
 import FilamentCursor from "@/components/site/FilamentCursor";
 import Grain from "@/components/site/Grain";
 import ScrollWire from "@/components/site/ScrollWire";
+import Spotlight from "@/components/site/Spotlight";
 import Nav from "@/components/site/Nav";
 import Hero from "@/components/site/Hero";
 import SpecBand from "@/components/site/SpecBand";
 import SearchProof from "@/components/site/SearchProof";
+import Standard from "@/components/site/Standard";
 import Work from "@/components/site/Work";
 import Pricing from "@/components/site/Pricing";
 import Process from "@/components/site/Process";
@@ -22,6 +24,7 @@ import FloatingWhatsApp from "@/components/site/FloatingWhatsApp";
  *   Hero        — you have a problem
  *   SpecBand    — here is the cost and the timeline, before you have to ask
  *   SearchProof — here is the problem, drawn
+ *   Standard    — here is the bar, shown before it is argued
  *   Work        — here is proof I can build
  *   Pricing     — here is exactly what it costs
  *   Process     — here is how little you have to do
@@ -40,12 +43,14 @@ export default function Page() {
       <FilamentCursor />
       <Grain />
       <ScrollWire />
+      <Spotlight />
       <Nav />
 
-      <main>
+      <main id="main">
         <Hero />
         <SpecBand />
         <SearchProof />
+        <Standard />
         <Work />
         <Pricing />
         <Process />

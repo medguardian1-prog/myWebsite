@@ -3,6 +3,7 @@
 import { contact, pricing } from "@/lib/site";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { ArrowOutIcon, MailIcon, WhatsAppIcon } from "./Icons";
+import SectionLabel from "./SectionLabel";
 
 const ROWS = [
   {
@@ -41,10 +42,7 @@ export default function Contact() {
       />
 
       <div className="relative">
-        <div className="flex items-baseline gap-4">
-          <span className="label !text-filament">(07)</span>
-          <span className="label">The ask</span>
-        </div>
+        <SectionLabel n="07">The ask</SectionLabel>
 
         <SplitWords
           as="h2"

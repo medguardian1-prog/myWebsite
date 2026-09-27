@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { SearchIcon, StarIcon, WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
 import { cn } from "@/lib/utils";
+import SectionLabel from "./SectionLabel";
 
 /**
  * Pays off the hero's claim by showing it: one drawn search results page,
@@ -47,10 +48,7 @@ export default function SearchProof() {
 
   return (
     <section id="found" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
-      <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(01)</span>
-        <span className="label">Why it matters</span>
-      </div>
+      <SectionLabel n="01">Why it matters</SectionLabel>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
         <SplitWords

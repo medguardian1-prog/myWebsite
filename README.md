@@ -43,6 +43,7 @@ Google reads.
 | FAQ answers (also feeds Google rich results) | `src/lib/site.ts` → `faqs` |
 | Client testimonials | `src/lib/site.ts` → `testimonials` |
 | Section order | `src/app/page.tsx` |
+| The line in "The standard" interlude | `src/components/site/Standard.tsx` → `LINE` |
 
 ### Things marked TODO for you
 
@@ -77,7 +78,7 @@ Google reads.
 
 ## Why the sections are in this order
 
-Hero → **Spec band** → Search proof → Work → Pricing → Process → Who → Contact.
+Hero → **Spec band** → Search proof → **The standard** → Work → Pricing → Process → Who → FAQ → Contact.
 
 The four numbers land second, before anything asks the visitor to read. Almost
 everyone here arrived from a cold WhatsApp message and is trying to answer one
@@ -154,6 +155,44 @@ resolution (the field is all soft glow, so the upscale is invisible), pauses whe
 off-screen or when the tab is hidden, and doesn't run at all under reduced
 motion. If WebGL is unavailable the static gradient underneath carries the
 design.
+
+### The showroom layer
+
+The site takes its pacing from car-maker sites like Bugatti's: long, quiet
+stretches, then one cinematic move at a time. Each is a single idea:
+
+- **The hero gauge** (`HeroGauge.tsx`, desktop only) — the turnaround drawn as
+  an instrument dial. On load it does an ignition sweep (full scale, then back
+  to rest) and settles on the real figure from `turnaround.value`. Scroll hard
+  and the needle revs with your scroll speed, then drops back to 5.
+- **The hero exit** — scrolling out of the hero lifts and fades the statement,
+  tips the gauge away, and pushes the logotype toward you as the next section
+  slides over it.
+- **Spec band counters** (`CountUp.tsx`) — each figure sweeps up from zero once
+  as it arrives. The final text is always exactly the string in `site.ts`, and
+  the server renders the finished value so it's readable without JS.
+- **The standard** (`Standard.tsx`) — a pinned interlude between the problem
+  and the proof. A tilted wall of the five demo screenshots starts as a framed
+  plate, opens out to fill the screen, and one line about the standard lights
+  up word by word over it. It uses CSS `sticky`, not a JS pin, so phones scroll
+  it natively.
+- **Gallery focus** — in the pinned desktop gallery the build nearest the
+  centre comes forward and the others recede, with a live `01 / 05` readout
+  and the progress rail inside the pinned frame (it used to sit below it and
+  only appeared once the pin released).
+- **Showroom light** (`Spotlight.tsx`) — every `.wire-border` card catches a
+  pool of light under the pointer, and its border burns brightest nearest the
+  cursor. Project screenshots also tilt toward the pointer and catch a glare.
+- **Chapter markers** (`SectionLabel.tsx`) — the `(03) ——— The price` rule
+  draws itself in as each section arrives. The nav highlights the chapter
+  you're in.
+
+All of it is transform/opacity only, and all of it stands down under
+`prefers-reduced-motion`. One trap worth knowing: scroll-linked values use
+`useTransform(progress, ramp(...))` from `src/lib/motion.ts`, **not** the
+array form `useTransform(progress, [a, b], [c, d])`. The array form lets
+Framer hand the animation to a native ScrollTimeline, which mis-maps on the
+sticky section and leaves it stuck.
 
 ### On the logotype animation
 

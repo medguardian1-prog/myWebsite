@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { processSteps } from "@/lib/site";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { cn } from "@/lib/utils";
+import SectionLabel from "./SectionLabel";
 
 /**
  * Four steps strung along a wire that charges as you scroll past it. The node
@@ -60,10 +61,7 @@ export default function Process() {
 
   return (
     <section id="process" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
-      <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(04)</span>
-        <span className="label">How it runs</span>
-      </div>
+      <SectionLabel n="04">How it runs</SectionLabel>
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[1.35fr_1fr] lg:items-end">
         <SplitWords

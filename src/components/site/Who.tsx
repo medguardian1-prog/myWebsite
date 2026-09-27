@@ -1,12 +1,17 @@
 "use client";
 
 import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useReducedMotionSafe } from "@/lib/useReducedMotionSafe";
+import { EASE_WIPE, ramp } from "@/lib/motion";
 import { owner, site, contact } from "@/lib/site";
 import durban from "../../../public/durban.webp";
 import { SplitWords, FadeUp } from "./TextReveal";
 import { Button } from "@/components/ui/button";
 import { PinIcon, WhatsAppIcon } from "./Icons";
 import Magnetic from "./Magnetic";
+import SectionLabel from "./SectionLabel";
 
 const SPEC: readonly (readonly [string, string])[] = [
   ["Name", owner.name],
@@ -23,12 +28,14 @@ const SPEC: readonly (readonly [string, string])[] = [
  * dressed up as a team.
  */
 export default function Who() {
+  const plateRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotionSafe();
+  const { scrollYProgress } = useScroll({ target: plateRef, offset: ["start end", "end start"] });
+  const drift = useTransform(scrollYProgress, ramp(0, 1, -8, 8, "%"));
+
   return (
     <section id="who" className="relative bg-ink px-[var(--gutter)] py-24 md:py-36">
-      <div className="flex items-baseline gap-4">
-        <span className="label !text-filament">(05)</span>
-        <span className="label">Who builds it</span>
-      </div>
+      <SectionLabel n="05">Who builds it</SectionLabel>
 
       <div className="mt-14 grid gap-12 lg:grid-cols-12 lg:gap-16">
         {/* ---- dossier plate ---- */}
@@ -41,15 +48,29 @@ export default function Who() {
                 Durban rather than a stock face: it makes the "based in Durban"
                 claim concrete without pretending to be you.
               */}
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-ink-3">
-                <Image
-                  src={durban}
-                  alt="The arch of Moses Mabhida Stadium, Durban"
-                  fill
-                  sizes="(min-width: 1024px) 40vw, 92vw"
-                  placeholder="blur"
-                  className="object-cover"
-                />
+              <div ref={plateRef} className="relative aspect-[4/5] w-full overflow-hidden bg-ink-3">
+                {/* Unveiled like a cover lifting off, then drifts against the scroll. */}
+                <motion.div
+                  className="absolute inset-0"
+                  initial={{ clipPath: "inset(100% 0 0 0)" }}
+                  whileInView={{ clipPath: "inset(0% 0 0 0)" }}
+                  viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+                  transition={{ duration: 1.4, ease: EASE_WIPE }}
+                >
+                  <motion.div
+                    className="absolute inset-[-9%_0]"
+                    style={reduce ? undefined : { y: drift }}
+                  >
+                    <Image
+                      src={durban}
+                      alt="The arch of Moses Mabhida Stadium, Durban"
+                      fill
+                      sizes="(min-width: 1024px) 40vw, 92vw"
+                      placeholder="blur"
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </motion.div>
                 {/* Drafting grid, so the plate reads as a document not a postcard. */}
                 <div
                   aria-hidden
@@ -86,7 +107,10 @@ export default function Who() {
                 <div className="flex items-center gap-4 px-5 py-3.5">
                   <dt className="label w-[5.5rem] shrink-0 !text-[9px]">Status</dt>
                   <dd className="flex items-center gap-2 text-[13.5px] text-filament">
-                    <span className="size-1.5 rounded-full bg-filament " />
+                    <span className="relative flex size-1.5">
+                      <span className="absolute inline-flex size-full animate-ping rounded-full bg-filament opacity-60" />
+                      <span className="relative size-1.5 rounded-full bg-filament" />
+                    </span>
                     Taking on work
                   </dd>
                 </div>

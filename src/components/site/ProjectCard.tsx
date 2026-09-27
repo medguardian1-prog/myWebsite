@@ -29,6 +29,7 @@ export default function ProjectCard({
   const [loaded, setLoaded] = useState(false);
   const timer = useRef<number | undefined>(undefined);
   const frameRef = useRef<HTMLDivElement>(null);
+  const tiltRef = useRef<HTMLAnchorElement>(null);
 
   // The preview iframe renders at a fixed 1440px desktop viewport, so it has
   // to be scaled by however much the card has shrunk relative to that.
@@ -60,6 +61,29 @@ export default function ProjectCard({
     window.clearTimeout(timer.current);
     setLive(false);
     setLoaded(false);
+    const el = tiltRef.current;
+    if (el) {
+      el.style.setProperty("--rx", "0deg");
+      el.style.setProperty("--ry", "0deg");
+      el.style.setProperty("--glare", "0");
+    }
+  };
+
+  // The screen tips toward the pointer a few degrees and catches a glare,
+  // like a display on a turntable. Pointer devices only; custom properties
+  // only, so it never re-renders.
+  const tilt = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    const el = tiltRef.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width;
+    const py = (e.clientY - r.top) / r.height;
+    el.style.setProperty("--rx", `${(0.5 - py) * 5}deg`);
+    el.style.setProperty("--ry", `${(px - 0.5) * 7}deg`);
+    el.style.setProperty("--gx", `${px * 100}%`);
+    el.style.setProperty("--gy", `${py * 100}%`);
+    el.style.setProperty("--glare", "1");
   };
 
   return (
@@ -67,6 +91,7 @@ export default function ProjectCard({
       className={cn("group/card relative flex flex-col", className)}
       onPointerEnter={arm}
       onPointerLeave={disarm}
+      onPointerMove={tilt}
     >
       <div className="mb-4 flex items-end justify-between gap-4">
         <div className="flex items-baseline gap-3">
@@ -82,12 +107,14 @@ export default function ProjectCard({
         </span>
       </div>
 
+      <div className="[perspective:1600px]">
       <a
+        ref={tiltRef}
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Open the ${project.name} demo build in a new tab`}
-        className="wire-border relative block overflow-hidden rounded-2xl border border-hairline bg-ink-2"
+        className="wire-border relative block overflow-hidden rounded-2xl border border-hairline bg-ink-2 transition-[transform,box-shadow] duration-[700ms] ease-[cubic-bezier(0.16,1,0.3,1)] [transform:rotateX(var(--rx,0deg))_rotateY(var(--ry,0deg))] hover:shadow-[0_40px_80px_-30px_rgba(255,122,26,0.28)]"
       >
         {/* Chrome bar: the real domain, because it really is deployed there. */}
         <div className="flex items-center gap-2.5 border-b border-hairline bg-ink-3/80 px-4 py-2.5">
@@ -147,8 +174,19 @@ export default function ProjectCard({
             aria-hidden
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_top,rgba(8,7,11,0.55),transparent_45%)] opacity-70 transition-opacity duration-700 group-hover/card:opacity-30"
           />
+          {/* Glare, following the pointer across the glass. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 mix-blend-soft-light transition-opacity duration-500"
+            style={{
+              opacity: "var(--glare, 0)",
+              background:
+                "radial-gradient(600px circle at var(--gx, 50%) var(--gy, 0%), rgba(255,230,200,0.45), transparent 55%)",
+            }}
+          />
         </div>
       </a>
+      </div>
 
       <div className="mt-5 flex flex-col gap-3">
         <p className="label !text-filament-gold">{project.sector}</p>

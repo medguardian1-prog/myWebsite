@@ -130,6 +130,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
         />
+        <a
+          href="#main"
+          className="fixed left-4 top-4 z-[200] -translate-y-20 rounded-full bg-bone px-5 py-3 font-mono text-[11px] uppercase tracking-[0.16em] text-ink transition-transform focus-visible:translate-y-0"
+        >
+          Skip to content
+        </a>
         {children}
         <Telemetry />
         <Analytics />
